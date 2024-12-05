@@ -26,8 +26,12 @@
 
 body {
   margin: 0;
-  background-color: var(--main-bg-page);
+  min-height: 100vh;
+  position: relative;
+  background: left / 18% no-repeat url("/src/components/icons/auth-bg-2.png"),
+            var(--main-bg-page) right / 18% no-repeat url("/src/components/icons/auth-bg-1.png");
 }
+
 
 /**
  * Render the `main` element consistently in IE.
@@ -80,6 +84,7 @@ pre {
 
 a {
   background-color: transparent;
+  text-decoration: none;
 }
 
 /**
