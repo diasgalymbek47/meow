@@ -28,10 +28,15 @@ body {
   margin: 0;
   min-height: 100vh;
   position: relative;
-  background: left / 18% no-repeat url("/src/components/icons/auth-bg-2.png"),
-            var(--main-bg-page) right / 18% no-repeat url("/src/components/icons/auth-bg-1.png");
+  background: left / 18% no-repeat url("/src/components/icons/def-leftBG-img.png"),
+            var(--main-bg-page) right / 18% no-repeat url("/src/components/icons/def-rightBG-img.png");
 }
 
+.container {
+  width: 1080px;
+  margin: 0 auto;
+  text-align: center;
+}
 
 /**
  * Render the `main` element consistently in IE.
@@ -49,6 +54,7 @@ main {
 h1 {
   font-size: 2em;
   margin: 0.67em 0;
+  font-family: "Madimi One";
 }
 
 /* Grouping content
