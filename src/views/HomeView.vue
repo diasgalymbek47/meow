@@ -24,12 +24,12 @@ import Header from '../components/HeaderHome.vue'
 <style scoped>
 .wrapper {
     min-height: 100vh;
-    position: relative;
-    background: left / 18% no-repeat url("/src/components/icons/main-rightside-img.png"),
-        var(--main-bg-page) right / 18% no-repeat url("/src/components/icons/main-leftside-img.png");
+    background: left / 18% no-repeat url("/src/components/images/main-rightside-img.png"),
+        var(--main-bg-page) right / 18% no-repeat url("/src/components/images/main-leftside-img.png");
+        padding-top: 10px;
 }
 main {
-    margin-top: 200px;
+    margin-top: 180px;
     color: #201B65;
 }
 span {
@@ -41,7 +41,7 @@ h6 {
     padding: 10px 0px;
     margin: 0 auto;
     font-size: 14px;
-    font-weight: normal;
+    font-weight: 500;
     border-radius: 40px;
     border: 1px solid #E4E4E4;
     background-color: #fff;
@@ -69,12 +69,44 @@ button {
     color: #fff;
     outline: none;
     border: none;
-    background-color: #000267;
+    position: relative;
+    background: linear-gradient(25deg, rgba(2,0,36,1) 0%, #5F5BFF);
     box-shadow: 4px 4px 5px rgba(0, 0, 0, 25%);
-    transition: transform 0.1s ease;
+    z-index: 100;
+    overflow: hidden;
+    transition: all 0.1s ease;
 }
 button:active {
     transform: translateY(3px) translateX(3px);
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 25%);
+}
+button::after {
+    content: "";
+    display: flex;
+    position: absolute;
+    top: -10px;
+    left: -20%;
+    width: 6px;
+    height: 150%;
+    filter: blur(10px);
+    background-color: #fff;
+    transform: rotate(-35deg);
+    pointer-events: none;
+}
+button:hover::after {
+    animation: moveGradient 0.8s  ease-in-out;
+}
+
+
+@keyframes moveGradient {
+    0% {
+        left: -20%; 
+    }
+    50% {
+        left: 10%;
+    }
+    100% {
+        left: 120%;
+    }
 }
 </style>

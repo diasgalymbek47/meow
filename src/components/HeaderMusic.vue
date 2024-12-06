@@ -9,11 +9,11 @@ import { RouterLink } from 'vue-router';
         </RouterLink>
 
         <nav class="nav">
-            <RouterLink class="nav_item" to="/music">Музыка</RouterLink>
+            <RouterLink class="nav_item active" to="/music">Музыка</RouterLink>
             <RouterLink class="nav_item" to="/chat">Чат</RouterLink>
             <RouterLink class="nav_item" to="/cinema">Кино</RouterLink>
         </nav>
-        <RouterLink class="login" to="/login">Войти</RouterLink>
+        <RouterLink class="profile" to="/login"><img src="./icons/profile-img.png"></RouterLink>
     </header>
 </template>
 
@@ -28,7 +28,7 @@ import { RouterLink } from 'vue-router';
 
 .logo {
     margin: 0;
-    color: #201B65;
+    color: #F0A61C;
 }
 
 .nav {
@@ -37,7 +37,7 @@ import { RouterLink } from 'vue-router';
 }
 
 .nav_item {
-    color: #201B65;
+    color: #fff;
     width: 100px;
     padding: .75em 0;
     overflow: hidden;
@@ -52,13 +52,13 @@ import { RouterLink } from 'vue-router';
     opacity: 0;
     position: relative;
     bottom: -8px;
-    background-color: #5F5BFF;
+    background-color: #F0A61C;
     transform: translateX(-100%);
     transition: all 0.3s ease;
 }
 
-.nav_item:hover {
-    color: #5F5BFF;
+.nav_item:hover, .nav_item.active {
+    color: #F0A61C;
 }
 
 .nav_item:hover::after {
@@ -66,17 +66,15 @@ import { RouterLink } from 'vue-router';
     opacity: 1;
 }
 
-.login {
-    padding: 13px 23px;
-    background-color: #5F5BFF;
-    border-radius: 8px;
-    color: #F6F6F6;
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 25%);
-    transition: transform 0.1s ease;
+.profile {
+    border-radius: 50%;
+    overflow: hidden;
+    width: 50px;
+    height: 50px;
+    border: 2px solid #8E8E8E;
 }
-
-.login:active {
-    transform: translateY(3px) translateX(3px);
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 25%);
+.profile img{
+    width: 100%;
+    aspect-ratio: 1/1;
 }
 </style>
