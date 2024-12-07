@@ -1,6 +1,7 @@
 <script setup>
 import HeaderMusic from "../components/HeaderMusic.vue";
 import MusicMain from "@/components/MusicMain.vue";
+import AlbumItem from "@/components/AlbumItem.vue";
 </script>
 
 <template>
@@ -16,56 +17,9 @@ import MusicMain from "@/components/MusicMain.vue";
                     <span>Новые треки, альбомы и сборники</span>
                 </a>
                 <div class="albums-line">
-                    <div class="wrap-album">
-                        <div class="album-img">
-                            <img src="../components/music-images/OneOne-Yenlik.jpeg">
-                        </div>
-                        <div class="album-info">
-                            <h4>One One</h4>
-                            <p>Yenlik, De lacure</p>
-                            <span>2024 - сингл</span>
-                        </div>
-                    </div>
-                    <div class="wrap-album">
-                        <div class="album-img">
-                            <img src="../components/music-images/OneOne-Yenlik.jpeg">
-                        </div>
-                        <div class="album-info">
-                            <h4>One One</h4>
-                            <p>Yenlik, De lacure</p>
-                            <span>2024 - сингл</span>
-                        </div>
-                    </div>
-                    <div class="wrap-album">
-                        <div class="album-img">
-                            <img src="../components/music-images/OneOne-Yenlik.jpeg">
-                        </div>
-                        <div class="album-info">
-                            <h4>One One</h4>
-                            <p>Yenlik, De lacure</p>
-                            <span>2024 - сингл</span>
-                        </div>
-                    </div>
-                    <div class="wrap-album">
-                        <div class="album-img">
-                            <img src="../components/music-images/OneOne-Yenlik.jpeg">
-                        </div>
-                        <div class="album-info">
-                            <h4>One One</h4>
-                            <p>Yenlik, De lacure</p>
-                            <span>2024 - сингл</span>
-                        </div>
-                    </div>
-                    <div class="wrap-album">
-                    <div class="album-img">
-                        <img src="../components/music-images/OneOne-Yenlik.jpeg">
-                    </div>
-                    <div class="album-info">
-                        <h4>One One</h4>
-                        <p>Yenlik, De lacure</p>
-                        <span>2024 - сингл</span>
-                    </div>
-                </div>
+                    <AlbumItem/>
+                    <AlbumItem/>
+                    <AlbumItem/>
                 </div>
             </div>
         </div>
@@ -82,6 +36,7 @@ import MusicMain from "@/components/MusicMain.vue";
     transform: translateY(-20px);
     animation: fadeIn 0.5s ease-out forwards;
     background: url(../components/images/musicbg-img.png) no-repeat;
+    box-shadow: 0px 0px 40px 0px rgba(0, 0, 0, 25%);
 }
 
 /* Lower Container */
@@ -92,7 +47,7 @@ import MusicMain from "@/components/MusicMain.vue";
     border-radius: 50px;
     backdrop-filter: blur(10px);
     background-color: #ffffff25;
-    box-shadow: 0px 4px 20px -4px rgba(0, 0, 0, 25%);
+    box-shadow: 0px 0px 40px 0px rgba(0, 0, 0, 25%);
 }
 
 .new-relise_line {}
@@ -119,50 +74,10 @@ import MusicMain from "@/components/MusicMain.vue";
 /* album */
 .albums-line {
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    row-gap: 10px;
 }
-
-.wrap-album {
-    width: 200px;
-    height: 270px;
-    margin: 5px;
-    padding: 10px;
-}
-
-.album-img {
-    aspect-ratio: 1/1;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    overflow: hidden;
-}
-
-.wrap-album img {
-    width: 100%;
-}
-
-.album-info {
-    background-color: #829b142a;
-    border-radius: 10px;
-    padding: 4px;
-    text-align: left;
-}
-
-.album-info h4 {}
-
-.album-info p {
-    color: #777;
-    margin-top: 4px;
-    font-size: 14px;
-}
-
-.album-info span {
-    font-size: 12px;
-    display: block;
-    margin-top: 4px;
-    color: #777;
-}
-
-
 
 @keyframes fadeIn {
     to {

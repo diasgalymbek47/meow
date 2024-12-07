@@ -113,12 +113,12 @@ main {
     letter-spacing: 1.2px;
     padding: 8px 16px 8px 40px;
     background-color: transparent;
-    border-bottom: 1px solid transparent;
     transition: all 0.2s ease;
 }
 .right button:hover {
     color: #F0A61C;
-    border-bottom: 1px solid #F0A61C;
+    border-right: 1px solid #F0A61C;
+    padding-right: 20px;
 }
 
 .right button span svg {
