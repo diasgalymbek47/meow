@@ -31,7 +31,6 @@
     gap: 10px;
     align-items: flex-end;
     height: 150px;
-    margin-top: 70px;
     position: relative;
 }
 

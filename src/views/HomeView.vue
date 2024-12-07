@@ -24,9 +24,8 @@ import Header from '../components/HeaderHome.vue'
 <style scoped>
 .wrapper {
     min-height: 100vh;
-    background: left / 18% no-repeat url("/src/components/images/main-rightside-img.png"),
-        var(--main-bg-page) right / 18% no-repeat url("/src/components/images/main-leftside-img.png");
-        padding-top: 10px;
+    background: left 100px / 18% no-repeat url("/src/components/images/main-rightside-img.png"),
+        var(--main-bg-page) right 100px / 18% no-repeat url("/src/components/images/main-leftside-img.png");
 }
 main {
     margin-top: 180px;
