@@ -18,8 +18,6 @@ import AlbumItem from "@/components/AlbumItem.vue";
                 </a>
                 <div class="albums-line">
                     <AlbumItem/>
-                    <AlbumItem/>
-                    <AlbumItem/>
                 </div>
             </div>
         </div>
