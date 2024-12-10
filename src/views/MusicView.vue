@@ -17,9 +17,13 @@ import AlbumItem from "@/components/AlbumItem.vue";
                     <span>Новые треки, альбомы и сборники</span>
                 </a>
                 <div class="albums-line">
+<<<<<<< HEAD
                     <AlbumItem />
                     <AlbumItem />
                     <AlbumItem />
+=======
+                    <AlbumItem/>
+>>>>>>> f3d596b0d14f404ed5f43c260b48c165068f18cb
                 </div>
             </div>
         </div>
