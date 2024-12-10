@@ -28,7 +28,7 @@ import Header from '../components/HeaderHome.vue'
         var(--main-bg-page) right 100px / 18% no-repeat url("/src/components/images/main-leftside-img.png");
 }
 main {
-    margin-top: 180px;
+    margin-top: 100px;
     color: #201B65;
 }
 span {

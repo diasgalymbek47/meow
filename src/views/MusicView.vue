@@ -17,9 +17,9 @@ import AlbumItem from "@/components/AlbumItem.vue";
                     <span>Новые треки, альбомы и сборники</span>
                 </a>
                 <div class="albums-line">
-                    <AlbumItem/>
-                    <AlbumItem/>
-                    <AlbumItem/>
+                    <AlbumItem />
+                    <AlbumItem />
+                    <AlbumItem />
                 </div>
             </div>
         </div>
@@ -73,8 +73,8 @@ import AlbumItem from "@/components/AlbumItem.vue";
 
 /* album */
 .albums-line {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     justify-content: space-evenly;
     row-gap: 10px;
 }
