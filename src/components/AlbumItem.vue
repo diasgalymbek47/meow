@@ -1,6 +1,6 @@
 <script setup>
 import { useMusicsStore } from "@/stores/musics";
-import { onMounted } from "vue";
+import { ref, onMounted } from "vue";
 
 // Подключаем хранилище
 const musicStore = useMusicsStore();

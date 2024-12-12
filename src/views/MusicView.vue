@@ -2,6 +2,66 @@
 import HeaderMusic from "../components/HeaderMusic.vue";
 import MusicMain from "@/components/MusicMain.vue";
 import AlbumItem from "@/components/AlbumItem.vue";
+import { useMusicsStore } from "@/stores/musics";
+import { useMusicPlayer } from "@/stores/musicPlayer";
+import { onMounted } from "vue";
+
+const audioPleer = useMusicPlayer();
+const musicStore = useMusicsStore();
+let count = 0;
+
+onMounted(async () => {
+    await musicStore.getMusics();
+    if (musicStore.musics.length > 0) {
+        audioPleer.currentMusic = getCurrentMusic();
+    }
+})
+
+const togglePlay = () => {
+    if (audioPleer.currentMusic) {
+        if (audioPleer.isActive) {
+            audioPleer.currentMusic.pause();
+            audioPleer.isActive = false;
+        } else {
+            audioPleer.currentMusic.play();
+            audioPleer.isActive = true;
+        }
+    }
+}
+
+const prev = () => {
+    count--;
+    audioPleer.currentMusic = getCurrentMusic();
+    play();
+}
+
+const next = () => {
+    count++;
+    audioPleer.currentMusic = getCurrentMusic();
+    play();
+}
+
+const play = () => {
+    audioPleer.currentMusic.play();
+    audioPleer.isActive = true;
+}
+
+const getCurrentMusic = () => {
+    if (audioPleer.currentMusic) {
+        audioPleer.currentMusic.pause(); // Останавливаем текущий трек
+        audioPleer.currentMusic.currentTime = 0; // Сбрасываем время воспроизведения
+    }
+
+    if (count >= musicStore.musics.length) {
+        count = 0;
+    }
+
+    if (count <= -1) {
+        count = musicStore.musics.length - 1;
+    }
+
+    return new Audio(musicStore.musics[count].src);
+}
 </script>
 
 <template>
@@ -17,7 +77,7 @@ import AlbumItem from "@/components/AlbumItem.vue";
                     <span>Новые треки, альбомы и сборники</span>
                 </a>
                 <div class="albums-line">
-                    <AlbumItem/>
+                    <AlbumItem />
                 </div>
             </div>
         </div>
@@ -32,9 +92,9 @@ import AlbumItem from "@/components/AlbumItem.vue";
             </div>
             <div class="player">
                 <div class="btns">
-                    <button class="left">«</button>
-                    <button class="center">⌀</button>
-                    <button class="right">»</button>
+                    <button @click="prev" class="left">«</button>
+                    <button @click="togglePlay" class="center">⌀</button>
+                    <button @click="next" class="right">»</button>
                 </div>
                 <div class="progress-bar"><span></span></div>
             </div>
@@ -66,16 +126,19 @@ import AlbumItem from "@/components/AlbumItem.vue";
     background: #42342F;
     z-index: 1;
 }
+
 .playing-song {
     width: 33.333%;
     text-align: start;
     display: flex;
     align-items: center;
 }
+
 .playing-song .img {
     width: 60px;
     margin-right: 12px;
 }
+
 .playing-song .img img {
     width: 100%;
     border-radius: 5px;
@@ -86,14 +149,17 @@ import AlbumItem from "@/components/AlbumItem.vue";
     flex-direction: column;
     gap: 6px;
 }
-.playing-song .song-info a{
+
+.playing-song .song-info a {
     color: #fff;
     font-size: 16px;
 }
+
 .playing-song .song-info a.song-autor {
     font-size: 12px;
     color: #c3c3c3;
 }
+
 .playing-song .fav-btn {
     color: #c3c3c3;
     font-size: 32px;
@@ -110,24 +176,28 @@ import AlbumItem from "@/components/AlbumItem.vue";
     gap: 10px;
     padding-bottom: 15px;
 }
+
 .player .btns {
     display: flex;
     justify-content: center;
     gap: 20px;
 }
-.player .progress-bar{
+
+.player .progress-bar {
     width: 100%;
     height: 4px;
     border-radius: 4px;
     background-color: #fff;
     overflow: hidden;
 }
+
 .player .progress-bar span {
     width: 30%;
     height: 100%;
     display: block;
     background-color: #933;
 }
+
 .player .btns button {
     width: 40px;
     height: 40px;
@@ -137,6 +207,7 @@ import AlbumItem from "@/components/AlbumItem.vue";
     background-color: transparent;
     color: #9a9a9a;
 }
+
 .player .btns button:nth-child(2) {
     color: #fff;
     scale: 1.5;
@@ -148,16 +219,19 @@ import AlbumItem from "@/components/AlbumItem.vue";
     justify-content: end;
     gap: 20px;
 }
+
 .other-btn button {
     border: none;
     background-color: transparent;
 }
+
 .other-btn .volume {
     display: flex;
     align-items: center;
     gap: 10px;
     cursor: pointer;
 }
+
 .other-btn .volume span {
     display: block;
     width: 80px;
