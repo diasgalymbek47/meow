@@ -48,6 +48,7 @@
     position: absolute;
     bottom: -11px;
 }
+
 .wave-underline span {
     width: 10px;
     height: 5px;
@@ -58,26 +59,46 @@
 
 
 <script>
+import { useMusicPlayer } from "@/stores/musicPlayer"; // Импортируем Pinia Store
+
 export default {
     data() {
         return {
             waves: Array.from({ length: 14 }, () => ({
-                height: `${Math.random() * 10 + 10}px` // Генерация высоты от 10px до 60px
-            }))
+                height: `${Math.random() * 10 + 10}px` // Генерация высоты от 10px до 20px
+            })),
+            animationInterval: null, // Сохраняем идентификатор интервала
         };
     },
     mounted() {
-        // Обновляем высоту каждые 300ms
         this.startWaveAnimation();
     },
     methods: {
         startWaveAnimation() {
-            setInterval(() => {
-                this.waves.forEach(wave => {
-                    wave.height = `${Math.random() * 120 + 30}px`; // Новая высота
-                });
+            const audioPleer = useMusicPlayer(); // Получаем доступ к состоянию плеера
+
+            // Останавливаем текущий интервал, если есть
+            if (this.animationInterval) clearInterval(this.animationInterval);
+
+            // Устанавливаем новый интервал
+            this.animationInterval = setInterval(() => {
+                if (audioPleer.isActive) {
+                    // Если музыка играет, обновляем высоту волн
+                    this.waves.forEach(wave => {
+                        wave.height = `${Math.random() * 120 + 30}px`; // Новая высота
+                    });
+                } else {
+                    // Если музыка не играет, сбрасываем высоту волн
+                    this.waves.forEach(wave => {
+                        wave.height = `10px`; // Состояние покоя
+                    });
+                }
             }, 300); // Интервал обновления
         }
+    },
+    beforeUnmount() {
+        // Очищаем интервал при уничтожении компонента
+        if (this.animationInterval) clearInterval(this.animationInterval);
     }
 };
 </script>

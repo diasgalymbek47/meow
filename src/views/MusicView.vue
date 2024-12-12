@@ -4,63 +4,27 @@ import MusicMain from "@/components/MusicMain.vue";
 import AlbumItem from "@/components/AlbumItem.vue";
 import { useMusicsStore } from "@/stores/musics";
 import { useMusicPlayer } from "@/stores/musicPlayer";
-import { onMounted } from "vue";
+import { ref, onMounted } from "vue";
 
 const audioPleer = useMusicPlayer();
 const musicStore = useMusicsStore();
-let count = 0;
+const music = ref(null);
+const isLoading = ref(true);
 
 onMounted(async () => {
     await musicStore.getMusics();
     if (musicStore.musics.length > 0) {
-        audioPleer.currentMusic = getCurrentMusic();
-    }
-})
-
-const togglePlay = () => {
-    if (audioPleer.currentMusic) {
-        if (audioPleer.isActive) {
-            audioPleer.currentMusic.pause();
-            audioPleer.isActive = false;
-        } else {
-            audioPleer.currentMusic.play();
-            audioPleer.isActive = true;
+        audioPleer.init(musicStore.musics);
+        
+        if(audioPleer.currentMusic) {
+            music.value = audioPleer.getMusic();
         }
     }
-}
+    isLoading.value = false; 
+})
 
-const prev = () => {
-    count--;
-    audioPleer.currentMusic = getCurrentMusic();
-    play();
-}
-
-const next = () => {
-    count++;
-    audioPleer.currentMusic = getCurrentMusic();
-    play();
-}
-
-const play = () => {
-    audioPleer.currentMusic.play();
-    audioPleer.isActive = true;
-}
-
-const getCurrentMusic = () => {
-    if (audioPleer.currentMusic) {
-        audioPleer.currentMusic.pause(); // Останавливаем текущий трек
-        audioPleer.currentMusic.currentTime = 0; // Сбрасываем время воспроизведения
-    }
-
-    if (count >= musicStore.musics.length) {
-        count = 0;
-    }
-
-    if (count <= -1) {
-        count = musicStore.musics.length - 1;
-    }
-
-    return new Audio(musicStore.musics[count].src);
+const update = () => {
+    music.value = audioPleer.getMusic();
 }
 </script>
 
@@ -81,20 +45,21 @@ const getCurrentMusic = () => {
                 </div>
             </div>
         </div>
-        <div class="audio-bar">
+        <div v-if="isLoading">Загрузка музыки...</div>
+        <div v-else class="audio-bar">
             <div class="playing-song">
-                <div class="img"><img src="../components/music-images/Onail-Waste.jpeg"></div>
+                <div class="img"><img :src="music.img"></div>
                 <div class="song-info">
-                    <a href="#" class="song-name">Waste</a>
-                    <a href="#" class="song-autor">ONEIL, KANVISE, SMOLA</a>
+                    <a href="#" class="song-name">{{ music.name }}</a>
+                    <a href="#" class="song-autor">{{ music.artist }}</a>
                 </div>
                 <button class="fav-btn"><img src="../components/icons/Like.png"></button>
             </div>
             <div class="player">
                 <div class="btns">
-                    <button @click="prev" class="left">«</button>
-                    <button @click="togglePlay" class="center">⌀</button>
-                    <button @click="next" class="right">»</button>
+                    <button @click="() => { audioPleer.prev(); update(); }" class="left">«</button>
+                    <button @click="() => { audioPleer.togglePlay(); update(); }" class="center">⌀</button>
+                    <button @click="() => { audioPleer.next(); update(); }" class="right">»</button>
                 </div>
                 <div class="progress-bar"><span></span></div>
             </div>
