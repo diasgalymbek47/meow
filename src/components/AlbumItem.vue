@@ -1,35 +1,27 @@
 <script setup>
-import Album from "../stores/newReliseList";
-import { ref, onMounted } from 'vue';
-import axios from 'axios';
+import { useMusicsStore } from "@/stores/musics";
+import { onMounted } from "vue";
 
-// Реактивные переменные
-const data = ref([]);
-const loading = ref(true);
-const error = ref(null);
+// Подключаем хранилище
+const musicStore = useMusicsStore();
 
-// Функция для загрузки данных
-const fetchData = async () => {
-  try {
-    const response = await axios.get('https://diasgalymbek47.github.io/music/data.json');
-    data.value = response.data;
-  } catch (err) {
-    error.value = `Ошибка загрузки: ${err.message}`;
-  } finally {
-    loading.value = false;
-  }
-};
-
-// Выполнение запроса при монтировании компонента
-onMounted(fetchData);
+// Загружаем данные при монтировании компонента
+onMounted(() => {
+    musicStore.getMusics(); // Вызываем действие для получения музыки
+});
 </script>
 
 <template>
-    <div v-if="loading">Загрузка...</div>
-    <div v-else-if="error">{{ error }}</div>
-    <div class="wrap-album" v-for="(item, index) in data" :key="index">
+    <!-- Индикатор загрузки -->
+    <div v-if="musicStore.loading">Загрузка...</div>
+
+    <!-- Ошибка -->
+    <div v-else-if="musicStore.error">{{ musicStore.error }}</div>
+
+    <!-- Список альбомов -->
+    <div v-else class="wrap-album" v-for="(item, index) in musicStore.musics" :key="index">
         <div class="album-img">
-            <img :src="item.img">
+            <img :src="item.img" alt="Обложка альбома">
         </div>
         <div class="album-info">
             <h4>{{ item.name }}</h4>
@@ -68,8 +60,6 @@ onMounted(fetchData);
 }
 
 .album-info {
-    border-radius: 10px;
-    padding: 4px;
     text-align: left;
 }
 
@@ -90,7 +80,7 @@ onMounted(fetchData);
     font-family: "Inter";
     color: #777;
     margin-top: 4px;
-    font-size: 13px;
+    font-size: 12px;
     text-overflow: ellipsis;
     white-space: normal;
     display: -webkit-box;
