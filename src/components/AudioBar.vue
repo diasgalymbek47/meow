@@ -7,6 +7,7 @@ const audioPleer = useMusicPlayer();
 const musicStore = useMusicsStore();
 const music = ref(null);
 const isLoading = ref(true);
+const volumeBar = ref(null);
 
 onMounted(async () => {
     await musicStore.getMusics();
@@ -20,9 +21,9 @@ onMounted(async () => {
     isLoading.value = false;
 })
 
-const update = () => {
+audioPleer.currentMusic.onended = () => {
     music.value = audioPleer.getMusic();
-}
+};
 </script>
 
 <template>
@@ -38,9 +39,9 @@ const update = () => {
         </div>
         <div class="player">
             <div class="btns">
-                <button @click="() => { audioPleer.prev(); update(); }" class="left">«</button>
-                <button @click="() => { audioPleer.togglePlay(); update(); }" class="center">⌀</button>
-                <button @click="() => { audioPleer.next(); update(); }" class="right">»</button>
+                <button @click="audioPleer.prev" class="left">«</button>
+                <button @click="audioPleer.togglePlay()" class="center">⌀</button>
+                <button @click="audioPleer.next()" class="right">»</button>
             </div>
             <div class="progress-bar"><span></span></div>
         </div>
@@ -50,7 +51,7 @@ const update = () => {
             <button class="item"><img src="../components/icons/Services.png"></button>
             <div class="volume">
                 <button><img src="../components/icons/Voice.png"></button>
-                <span></span>
+                <span ref="volumeBar"></span>
             </div>
         </div>
     </div>
@@ -178,11 +179,22 @@ const update = () => {
 }
 
 .other-btn .volume span {
+    position: relative;
     display: block;
     width: 80px;
     height: 4px;
     border-radius: 4px;
-    background-color: #fff;
+    background-color: #000000;
     margin-bottom: 4px;
+}
+
+.other-btn .volume span::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20%;
+    height: 100%;
+    background-color: #fff;
 }
 </style>
