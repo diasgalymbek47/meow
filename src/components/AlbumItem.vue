@@ -1,14 +1,20 @@
 <script setup>
 import { useMusicsStore } from "@/stores/musics";
+import { useMusicPlayer } from "@/stores/musicPlayer";
 import { ref, onMounted } from "vue";
 
 // Подключаем хранилище
 const musicStore = useMusicsStore();
-
+const audioPleer = useMusicPlayer();
 // Загружаем данные при монтировании компонента
 onMounted(() => {
     musicStore.getMusics(); // Вызываем действие для получения музыки
 });
+
+const albumHandler = (index) => {
+    audioPleer.currentMusic.src = musicStore.musics[index].src;
+    audioPleer.play();
+}
 </script>
 
 <template>
@@ -19,7 +25,7 @@ onMounted(() => {
     <div v-else-if="musicStore.error">{{ musicStore.error }}</div>
 
     <!-- Список альбомов -->
-    <div v-else class="wrap-album" v-for="(item, index) in musicStore.musics" :key="index">
+    <div @click="albumHandler(index)" v-else class="wrap-album" v-for="(item, index) in musicStore.musics" :key="index">
         <div class="album-img">
             <img :src="item.img" alt="Обложка альбома">
         </div>
