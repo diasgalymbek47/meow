@@ -42,7 +42,13 @@ const update = () => music.value = audioPleer.getMusic();
                 <button @click="audioPleer.togglePlay" class="center">⌀</button>
                 <button @click="() => { audioPleer.next(), update() }" class="right">»</button>
             </div>
-            <div class="progress-bar"><span></span></div>
+            <div class="timer">
+                <span class="current">0:28</span>
+                <span class="total">3:14</span>
+            </div>
+            <div class="progress-bar">
+                <span></span>
+            </div>
         </div>
         <div class="other-btn">
             <button class="item"><img src="../components/icons/Term.png"></button>
@@ -57,6 +63,7 @@ const update = () => music.value = audioPleer.getMusic();
 </template>
 
 <style scoped>
+/* main */
 .audio-bar {
     border-radius: 16px 16px 0 0;
     position: sticky;
@@ -72,6 +79,8 @@ const update = () => music.value = audioPleer.getMusic();
     z-index: 1;
 }
 
+
+/* left */
 .playing-song {
     width: 33.333%;
     text-align: start;
@@ -113,34 +122,22 @@ const update = () => music.value = audioPleer.getMusic();
     background-color: transparent;
 }
 
+
+/* CENTER */
 .player {
     width: 33.333%;
     display: flex;
     align-items: center;
     flex-direction: column;
-    gap: 10px;
     padding-bottom: 15px;
+    position: relative;
+    gap: 4px;
 }
 
 .player .btns {
     display: flex;
     justify-content: center;
     gap: 20px;
-}
-
-.player .progress-bar {
-    width: 100%;
-    height: 4px;
-    border-radius: 4px;
-    background-color: #fff;
-    overflow: hidden;
-}
-
-.player .progress-bar span {
-    width: 30%;
-    height: 100%;
-    display: block;
-    background-color: #933;
 }
 
 .player .btns button {
@@ -158,6 +155,42 @@ const update = () => music.value = audioPleer.getMusic();
     scale: 1.5;
 }
 
+.player .progress-bar {
+    width: 100%;
+    height: 4px;
+    border-radius: 4px;
+    background-color: #fff;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+}
+
+.player .progress-bar span {
+    width: 30%;
+    height: 100%;
+    display: block;
+    background-color: #933;
+}
+
+/* center TIMERs */
+.player .timer {
+    width: 100%;
+}
+.player .timer span{
+    color: #c7c7c7;
+    font-size: 12px;
+    position: absolute;
+}
+.player .timer span.current {
+    left: -30px;
+}
+.player .timer span.total {
+    right: -30px;
+}
+
+
+
+/* RIGHT */
 .other-btn {
     width: 33.333%;
     display: flex;
