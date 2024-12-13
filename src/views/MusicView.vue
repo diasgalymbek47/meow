@@ -18,7 +18,7 @@ import AudioBar from "@/components/AudioBar.vue";
                     <span>Новые треки, альбомы и сборники</span>
                 </a>
                 <div class="albums-line">
-                    <AlbumItem />
+                    <AlbumItem/>
                 </div>
             </div>
         </div>
