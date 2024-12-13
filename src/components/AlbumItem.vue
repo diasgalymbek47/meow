@@ -83,6 +83,7 @@ onMounted(() => {
     color: #777;
     margin-top: 4px;
     font-size: 12px;
+    overflow: hidden;
     text-overflow: ellipsis;
     white-space: normal;
     display: -webkit-box;

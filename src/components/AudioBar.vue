@@ -47,7 +47,7 @@ const update = () => music.value = audioPleer.getMusic();
                 <span class="total">3:14</span>
             </div>
             <div class="progress-bar">
-                <span><div></div></span>
+                <span></span>
             </div>
         </div>
         <div class="other-btn">
@@ -70,7 +70,7 @@ const update = () => music.value = audioPleer.getMusic();
     bottom: 0px;
     width: 100%;
     height: 82px;
-    padding: 10px 16px 0;
+    padding: 8px 16px 4px;
 
     display: flex;
     align-items: center;
@@ -90,16 +90,20 @@ const update = () => music.value = audioPleer.getMusic();
 
 .playing-song .img {
     width: 60px;
+    height: 60px;
     margin-right: 12px;
 }
 
 .playing-song .img img {
     width: 100%;
+    height: 100%;
     border-radius: 5px;
+    object-fit: cover;
 }
 
 .playing-song .song-info {
     display: flex;
+    max-width: 190px;
     flex-direction: column;
     gap: 6px;
 }
@@ -107,6 +111,12 @@ const update = () => music.value = audioPleer.getMusic();
 .playing-song .song-info a {
     color: #fff;
     font-size: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
 }
 
 .playing-song .song-info a.song-autor {
@@ -118,13 +128,14 @@ const update = () => music.value = audioPleer.getMusic();
     color: #c3c3c3;
     font-size: 32px;
     border: none;
-    margin-left: 20px;
+    margin-left: auto;
     background-color: transparent;
 }
 
 
 /* CENTER */
 .player {
+    margin: 0 50px;
     width: 33.333%;
     display: flex;
     align-items: center;
@@ -167,13 +178,14 @@ const update = () => music.value = audioPleer.getMusic();
     background-color: #d5d5d5;
     position: relative;
 }
-.player .progress-bar span div {
+.player .progress-bar span::after {
+    content: "";
     width: 30%;
     border-radius: 4px;
     height: 100%;
     display: block;
     background-color: #F0A61C;
-    border-right: 1px solid rgb(97, 95, 95);
+    border-right: 1px solid #615f5f;
 }
 
 /* center TIMERs */
@@ -221,7 +233,7 @@ const update = () => music.value = audioPleer.getMusic();
     width: 80px;
     height: 4px;
     border-radius: 4px;
-    background-color: #000000;
+    background-color: #d5d5d5;
     margin-bottom: 4px;
 }
 
@@ -232,6 +244,8 @@ const update = () => music.value = audioPleer.getMusic();
     left: 0;
     width: 20%;
     height: 100%;
-    background-color: #fff;
+    border-radius: 4px;
+    background-color: #F0A61C;
+    border-right: 1px solid #615f5f;
 }
 </style>
