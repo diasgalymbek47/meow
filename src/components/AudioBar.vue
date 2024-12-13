@@ -3,6 +3,7 @@ import { useMusicsStore } from "@/stores/musics";
 import { useMusicPlayer } from "@/stores/musicPlayer";
 import { ref, onMounted } from "vue";
 
+const isActive = ref(false);
 const audioPleer = useMusicPlayer();
 const musicStore = useMusicsStore();
 const music = ref(null);
@@ -36,40 +37,49 @@ const formatDuration = (seconds) => {
     const secs = Math.floor(seconds % 60).toString().padStart(2, "0");
     return `${minutes}:${secs}`;
 }
+
+function toggleChange() {
+    isActive.value = !isActive.value
+}
 </script>
 
 <template>
     <div v-if="isLoading">Загрузка музыки...</div>
     <div v-else class="audio-bar">
+        <div class="progress-bar-wrap">
+            <div class="progress-bar">
+                <span></span>
+                <div class="timer">
+                    <span class="current">{{ durations.start }}</span>
+                    <span class="total">{{ durations.end }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="player">
+            <div class="btns">
+                <button @click="() => { audioPleer.prev(), update() }"
+                    class="left material-symbols-outlined">keyboard_double_arrow_left</button>
+                <button @click="audioPleer.togglePlay" class="play material-symbols-outlined">play_circle</button>
+                <button @click="() => { audioPleer.next(), update() }"
+                    class="right material-symbols-outlined">keyboard_double_arrow_right</button>
+            </div>
+        </div>
         <div class="playing-song">
             <div class="img"><img :src="music.img"></div>
             <div class="song-info">
                 <a href="#" class="song-name">{{ music.name }}</a>
                 <a href="#" class="song-autor">{{ music.artist }}</a>
             </div>
-            <button class="fav-btn"><img src="../components/icons/Like.png"></button>
+            <button class="fav-btn active material-symbols-outlined">favorite</button>
         </div>
-        <div class="player">
-            <div class="btns">
-                <button @click="() => { audioPleer.prev(), update() }" class="left">«</button>
-                <button @click="audioPleer.togglePlay" class="center">⌀</button>
-                <button @click="() => { audioPleer.next(), update() }" class="right">»</button>
-            </div>
-            <div class="timer">
-                <span class="current">{{ durations.start }}</span>
-                <span class="total">{{ durations.end }}</span>
-            </div>
-            <div class="progress-bar">
-                <span></span>
-            </div>
-        </div>
+        
         <div class="other-btn">
-            <button class="item"><img src="../components/icons/Term.png"></button>
-            <button class="item"><img src="../components/icons/Bullet list.png"></button>
-            <button class="item"><img src="../components/icons/Services.png"></button>
+            <button class="material-symbols-outlined">lyrics</button>
+            <button class="material-symbols-outlined no-active">format_list_bulleted</button>
+            <button class="material-symbols-outlined">settings</button>
             <div class="volume">
-                <button><img src="../components/icons/Voice.png"></button>
-                <span ref="volumeBar"></span>
+                <button class="material-symbols-outlined"  @click="toggleChange">volume_up</button>
+                <span ref="volumeBar" :class="{ active: isActive}"></span>
             </div>
         </div>
     </div>
@@ -78,32 +88,76 @@ const formatDuration = (seconds) => {
 <style scoped>
 /* main */
 .audio-bar {
-    border-radius: 16px 16px 0 0;
     position: sticky;
     bottom: 0px;
     width: 100%;
-    height: 82px;
-    padding: 8px 16px 4px;
+    height: 60px;
+    padding: 5px 0;
 
     display: flex;
     align-items: center;
-    justify-content: space-between;
     background: #42342F;
-    z-index: 1;
+    z-index: 111;
+}
+button {
+    width: 50px;
+    height: 50px;
+    border: none;
+    font-size: 24px;
+    color: #9a9a9a;
+    background-color: transparent;
+    outline: none;
+    border-radius: 6px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+button:hover {
+    background-color: #c2c2c234;
+    color: #e0e0e0;
 }
 
 
-/* left */
+/* START */
+.player {
+    position: relative;
+    padding-inline: 16px;
+}
+/* CENTER */
 .playing-song {
-    width: 33.333%;
     text-align: start;
     display: flex;
     align-items: center;
 }
+/* END */
+.other-btn {
+    margin-left: auto;
+    display: flex;
+    justify-content: end;
+    padding-right: 16px;
+    gap: 20px;
+}
+
+/* START PLAYER*/
+.player .btns {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.player .btns button:nth-child(2) {
+    font-size: 36px;
+}
+
+/* CENTER */
 
 .playing-song .img {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     margin-right: 12px;
 }
 
@@ -116,7 +170,6 @@ const formatDuration = (seconds) => {
 
 .playing-song .song-info {
     display: flex;
-    max-width: 190px;
     flex-direction: column;
     gap: 6px;
 }
@@ -124,12 +177,6 @@ const formatDuration = (seconds) => {
 .playing-song .song-info a {
     color: #fff;
     font-size: 16px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: normal;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
 }
 
 .playing-song .song-info a.song-autor {
@@ -138,119 +185,33 @@ const formatDuration = (seconds) => {
 }
 
 .playing-song .fav-btn {
-    color: #c3c3c3;
-    font-size: 32px;
-    border: none;
-    margin-left: auto;
-    background-color: transparent;
+    margin-left: 20px;
 }
-
-
-/* CENTER */
-.player {
-    margin: 0 50px;
-    width: 33.333%;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    padding-bottom: 15px;
-    position: relative;
+.playing-song .fav-btn.active {
+    color: #c66b6b;
 }
-
-.player .btns {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-}
-
-.player .btns button {
-    width: 40px;
-    height: 40px;
-    border: none;
-    font-size: 28px;
-    border-radius: 50%;
-    background-color: transparent;
-    color: #9a9a9a;
-}
-
-.player .btns button:nth-child(2) {
-    color: #fff;
-    scale: 1.5;
-}
-
-.player .progress-bar {
-    padding: 6px 0;
-    width: 100%;
-    cursor: pointer;
-}
-
-.player .progress-bar span {
-    display: block;
-    height: 4px;
-    border-radius: 4px;
-    background-color: #d5d5d5;
-    position: relative;
-}
-.player .progress-bar span::after {
-    content: "";
-    width: 30%;
-    border-radius: 4px;
-    height: 100%;
-    display: block;
-    background-color: #F0A61C;
-    border-right: 1px solid #615f5f;
-}
-
-/* center TIMERs */
-.player .timer {
-    width: 100%;
-    margin-top: 6px;
-}
-
-.player .timer span {
-    color: #c7c7c7;
-    font-size: 12px;
-    position: absolute;
-}
-
-.player .timer span.current {
-    left: -34px;
-}
-
-.player .timer span.total {
-    right: -34px;
-}
-
-
 
 /* RIGHT */
-.other-btn {
-    width: 33.333%;
-    display: flex;
-    justify-content: end;
-    gap: 20px;
-}
 
-.other-btn button {
-    border: none;
-    background-color: transparent;
-}
 
 .other-btn .volume {
     display: flex;
     align-items: center;
     gap: 10px;
-    cursor: pointer;
 }
 
 .other-btn .volume span {
     position: relative;
-    display: block;
-    width: 80px;
-    height: 4px;
     border-radius: 4px;
+    height: 4px;
+    opacity: 0;
+    width: 0;
     background-color: #d5d5d5;
-    margin-bottom: 4px;
+    transition: all .3s ease;
+}
+.other-btn .volume > span.active {
+    width: 80px;
+    opacity: 1;
 }
 
 .other-btn .volume span::after {
@@ -264,4 +225,70 @@ const formatDuration = (seconds) => {
     background-color: #F0A61C;
     border-right: 1px solid #615f5f;
 }
+
+.other-btn button.no-active {
+    color: #a0999733
+}
+button.no-active {background: transparent;}
+
+/* ------------------------------------------------------------------- */
+/* PROGRESS BAAAR */
+.progress-bar-wrap {
+    position: absolute;
+    top: -14px;
+    width: 100%;
+    cursor: pointer;
+    padding: 10px 0 4px;
+}
+
+.progress-bar {
+    position: relative;
+}
+
+.progress-bar > span {
+    display: block;
+    height: 4px;
+    border-radius: 4px;
+    background-color: #13131358;
+}
+
+.progress-bar span::after {
+    content: "";
+    width: 30%;
+    border-radius: 4px;
+    height: 100%;
+    display: block;
+    background-color: #F0A61C;
+    border-right: 1px solid #615f5f;
+}
+
+.timer {
+    width: 100%;
+    position: absolute;
+    pointer-events: none;
+}
+
+.timer span {
+    font-size: 12px;
+    position: absolute;
+    background-color: #dadada;
+    top: -24px;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.progress-bar .timer span.current {
+    left: 4px;
+}
+
+.progress-bar .timer span.total {
+    right: 4px;
+}
+
+.progress-bar-wrap:hover .timer span {
+    opacity: 1;
+}
+
+/* ------------------------------------------------------------------- */
+
 </style>

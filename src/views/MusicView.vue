@@ -42,7 +42,8 @@ import AudioBar from "@/components/AudioBar.vue";
 .lower-container {
     width: 100%;
     margin-top: 50px;
-    padding: 2em 2.5em 0.5em;
+    margin-bottom: 30px;
+    padding: 2em 2.5em 2em;
     border-radius: 50px;
     backdrop-filter: blur(10px);
     background-color: #ffffff25;
