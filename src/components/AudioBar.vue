@@ -21,9 +21,8 @@ onMounted(async () => {
     isLoading.value = false;
 })
 
-audioPleer.currentMusic.onended = () => {
-    music.value = audioPleer.getMusic();
-};
+audioPleer.currentMusic.onended = () => update();
+const update = () => music.value = audioPleer.getMusic();
 </script>
 
 <template>
@@ -39,9 +38,9 @@ audioPleer.currentMusic.onended = () => {
         </div>
         <div class="player">
             <div class="btns">
-                <button @click="audioPleer.prev" class="left">«</button>
-                <button @click="audioPleer.togglePlay()" class="center">⌀</button>
-                <button @click="audioPleer.next()" class="right">»</button>
+                <button @click="() => { audioPleer.prev(), update() }" class="left">«</button>
+                <button @click="audioPleer.togglePlay" class="center">⌀</button>
+                <button @click="() => { audioPleer.next(), update() }" class="right">»</button>
             </div>
             <div class="timer">
                 <span class="current">0:28</span>
