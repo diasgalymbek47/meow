@@ -8,7 +8,6 @@ const audioPleer = useMusicPlayer();
 const musicStore = useMusicsStore();
 const music = ref(null);
 const isLoading = ref(true);
-const volumeBar = ref(null);
 const durations = ref({
     "start": 0,
     "end": 0
@@ -22,13 +21,12 @@ onMounted(async () => {
         if (audioPleer.currentMusic) {
             music.value = audioPleer.getMusic();
 
-            audioPleer.currentMusic.onended = () => update();
+            audioPleer.currentMusic.onplay = () => update();
             audioPleer.currentMusic.onloadedmetadata = () => durations.value.end = formatDuration(audioPleer.currentMusic.duration);
             audioPleer.currentMusic.ontimeupdate = () => durations.value.start = formatDuration(audioPleer.currentMusic.currentTime);
         }
     }
     isLoading.value = false;
-    console.log(volumeBar.value);
 })
 
 const update = () => music.value = audioPleer.getMusic();
@@ -57,10 +55,10 @@ function toggleChange() {
         </div>
         <div class="player">
             <div class="btns">
-                <button @click="() => { audioPleer.prev(), update() }"
+                <button @click="audioPleer.prev"
                     class="left material-symbols-outlined">keyboard_double_arrow_left</button>
                 <button @click="audioPleer.togglePlay" class="play material-symbols-outlined">play_circle</button>
-                <button @click="() => { audioPleer.next(), update() }"
+                <button @click="audioPleer.next"
                     class="right material-symbols-outlined">keyboard_double_arrow_right</button>
             </div>
         </div>
@@ -92,7 +90,7 @@ function toggleChange() {
     bottom: 0px;
     width: 100%;
     height: 60px;
-    padding: 5px 0;
+    padding: 10px 0 5px 0;
 
     display: flex;
     align-items: center;
@@ -239,6 +237,15 @@ button.no-active {background: transparent;}
     width: 100%;
     cursor: pointer;
     padding: 10px 0 4px;
+    transition: all .3s ease;
+}
+
+.progress-bar-wrap:hover {
+    top: -16px;
+}
+
+.progress-bar-wrap:hover > .progress-bar > span {
+    height: 6px;
 }
 
 .progress-bar {
@@ -250,6 +257,7 @@ button.no-active {background: transparent;}
     height: 4px;
     border-radius: 4px;
     background-color: #13131358;
+    transition: all .3s ease;
 }
 
 .progress-bar span::after {

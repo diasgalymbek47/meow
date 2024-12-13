@@ -13,6 +13,7 @@ onMounted(() => {
 
 const albumHandler = (index) => {
     audioPleer.currentMusic.src = musicStore.musics[index].src;
+    audioPleer.i = index;
     audioPleer.play();
 }
 </script>
