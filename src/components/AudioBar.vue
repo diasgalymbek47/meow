@@ -8,6 +8,10 @@ const musicStore = useMusicsStore();
 const music = ref(null);
 const isLoading = ref(true);
 const volumeBar = ref(null);
+const durations = ref({
+    "start": 0,
+    "end": 0
+});
 
 onMounted(async () => {
     await musicStore.getMusics();
@@ -16,13 +20,22 @@ onMounted(async () => {
 
         if (audioPleer.currentMusic) {
             music.value = audioPleer.getMusic();
+
+            audioPleer.currentMusic.onended = () => update();
+            audioPleer.currentMusic.onloadedmetadata = () => durations.value.end = formatDuration(audioPleer.currentMusic.duration);
+            audioPleer.currentMusic.ontimeupdate = () => durations.value.start = formatDuration(audioPleer.currentMusic.currentTime);
         }
     }
     isLoading.value = false;
+    console.log(volumeBar.value);
 })
 
-audioPleer.currentMusic.onended = () => update();
 const update = () => music.value = audioPleer.getMusic();
+const formatDuration = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60).toString().padStart(2, "0");
+    return `${minutes}:${secs}`;
+}
 </script>
 
 <template>
@@ -43,8 +56,8 @@ const update = () => music.value = audioPleer.getMusic();
                 <button @click="() => { audioPleer.next(), update() }" class="right">»</button>
             </div>
             <div class="timer">
-                <span class="current">0:28</span>
-                <span class="total">3:14</span>
+                <span class="current">{{ durations.start }}</span>
+                <span class="total">{{ durations.end }}</span>
             </div>
             <div class="progress-bar">
                 <span></span>
@@ -176,14 +189,17 @@ const update = () => music.value = audioPleer.getMusic();
 .player .timer {
     width: 100%;
 }
-.player .timer span{
+
+.player .timer span {
     color: #c7c7c7;
     font-size: 12px;
     position: absolute;
 }
+
 .player .timer span.current {
     left: -30px;
 }
+
 .player .timer span.total {
     right: -30px;
 }
