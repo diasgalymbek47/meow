@@ -48,7 +48,7 @@ audioPleer.currentMusic.onended = () => {
                 <span class="total">3:14</span>
             </div>
             <div class="progress-bar">
-                <span></span>
+                <span><div></div></span>
             </div>
         </div>
         <div class="other-btn">
@@ -132,7 +132,6 @@ audioPleer.currentMusic.onended = () => {
     flex-direction: column;
     padding-bottom: 15px;
     position: relative;
-    gap: 4px;
 }
 
 .player .btns {
@@ -157,36 +156,42 @@ audioPleer.currentMusic.onended = () => {
 }
 
 .player .progress-bar {
+    padding: 6px 0;
     width: 100%;
-    height: 4px;
-    border-radius: 4px;
-    background-color: #fff;
-    overflow: hidden;
-    position: relative;
     cursor: pointer;
 }
 
 .player .progress-bar span {
+    display: block;
+    height: 4px;
+    border-radius: 4px;
+    background-color: #d5d5d5;
+    position: relative;
+}
+.player .progress-bar span div {
     width: 30%;
+    border-radius: 4px;
     height: 100%;
     display: block;
-    background-color: #933;
+    background-color: #F0A61C;
+    border-right: 1px solid rgb(97, 95, 95);
 }
 
 /* center TIMERs */
 .player .timer {
     width: 100%;
+    margin-top: 6px;
 }
 .player .timer span{
-    color: #c7c7c7;
+    color: #fff;
     font-size: 12px;
     position: absolute;
 }
 .player .timer span.current {
-    left: -30px;
+    left: -34px;
 }
 .player .timer span.total {
-    right: -30px;
+    right: -34px;
 }
 
 
