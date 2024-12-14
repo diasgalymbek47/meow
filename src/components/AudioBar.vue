@@ -27,7 +27,10 @@ onMounted(async () => {
         if (audioPleer.currentMusic) {
             music.value = audioPleer.getMusic();
 
-            audioPleer.currentMusic.onplay = updatePlayerState;
+            audioPleer.currentMusic.onplay = () => {
+                updatePlayerState();
+                update();
+            };
             audioPleer.currentMusic.onloadedmetadata = () => {
                 durations.value.end = formatDuration(audioPleer.currentMusic.duration);
             };
@@ -47,6 +50,10 @@ const updatePlayerState = () => {
     isPlaying.value = !audioPleer.currentMusic.paused;
     isActivePlay.value = isPlaying.value;
 };
+
+const update = () => {
+    music.value = audioPleer.getMusic();
+}
 
 // Форматирование продолжительности
 const formatDuration = (seconds) => {
