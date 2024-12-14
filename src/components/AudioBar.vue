@@ -12,6 +12,7 @@ const durations = ref({
     "end": 0
 });
 const progress = ref(0);
+const volume = ref(1);
 const isActivePlay = ref(false);  // Управление состоянием кнопки play
 const isActiveFav = ref(false);   // Управление состоянием кнопки favorite
 const isActiveVolume = ref(false); // Управление состоянием кнопки volume
@@ -65,6 +66,16 @@ function seekMusic(event) {
     audioPleer.currentMusic.currentTime = newTime;
     progress.value = clickPercentage * 100;
 }
+function seekVolume(event) {
+    const volumeBar = event.currentTarget;
+    const rect = volumeBar.getBoundingClientRect()
+    const clickX = event.clientX - rect.left;
+    const width = rect.width;
+    const clickPercentage = clickX / width;
+
+    volume.value = clickPercentage;
+    audioPleer.currentMusic.volume = volume.value;
+}
 
 // Переключение воспроизведения
 const togglePlay = () => {
@@ -90,7 +101,7 @@ const toggleVolume = () => {
 
 
 <!-- .................................................................................. -->
- 
+
 <template>
     <div v-if="isLoading">Загрузка музыки...</div>
     <div v-else class="audio-bar">
@@ -129,7 +140,8 @@ const toggleVolume = () => {
                 <a href="#" class="song-name">{{ music.name }}</a>
                 <a href="#" class="song-autor">{{ music.artist }}</a>
             </div>
-            <button class="fav-btn material-symbols-outlined" @click="toggleFav" :class="{ active: isActiveFav }">
+            <button class="fav-btn material-symbols-outlined" @click="toggleFav" :class="{ active: isActiveFav }"
+                title="Нравится">
                 favorite
             </button>
         </div>
@@ -143,7 +155,11 @@ const toggleVolume = () => {
             <!-- Volume Control -->
             <div class="volume">
                 <button class="material-symbols-outlined" @click="toggleVolume">volume_up</button>
-                <span ref="volumeBar" :class="{ active: isActiveVolume }"></span>
+                <div class="volume-line-wrap" ref="volumeBar" @click="seekVolume($event)">
+                    <div class="volume-line" :class="{ active: isActiveVolume }">
+                        <span :style="{ width: volume * 100 + '%' }"</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -251,6 +267,7 @@ button:hover {
 .playing-song .song-info a.song-autor {
     font-size: 12px;
 }
+
 .playing-song .song-info a:hover {
     color: #F0A61C;
 }
@@ -261,41 +278,41 @@ button:hover {
 }
 
 .playing-song .fav-btn.active {
-    color: #c66b6b;
+    color: #e76060;
 }
 
 /* Volume Control */
-.other-btn .volume {
+.volume {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.other-btn .volume span {
-    position: relative;
-    border-radius: 4px;
-    height: 4px;
-    opacity: 0;
+.volume .volume-line-wrap {
+    padding: 10px 0;
+    cursor: pointer;
+}
+
+.volume .volume-line {
     width: 0;
+    opacity: 0;
+    height: 6px;
+    border-radius: 4px;
     background-color: #d5d5d5;
     transition: all .3s ease;
 }
 
-.other-btn .volume > span.active {
+.volume .volume-line.active {
     width: 80px;
     opacity: 1;
 }
 
-.other-btn .volume span::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 20%;
+.volume .volume-line span {
+    display: flex;
     height: 100%;
     border-radius: 4px;
     background-color: #F0A61C;
-    border-right: 1px solid #615f5f;
+    transition: width 0.2s ease;
 }
 
 /* Inactive Button Styles */
@@ -321,7 +338,7 @@ button.no-active {
 }
 
 /* Progress Bar Height Change on Hover */
-.progress-bar-wrap:hover > .progress-bar {
+.progress-bar-wrap:hover>.progress-bar {
     height: 6px;
 }
 
@@ -335,7 +352,7 @@ button.no-active {
 }
 
 /* Progress Bar Indicator */
-.progress-bar > span {
+.progress-bar>span {
     display: block;
     height: 100%;
     background-color: #F0A61C;
@@ -373,5 +390,6 @@ button.no-active {
 .progress-bar-wrap:hover .timer span {
     opacity: 1;
 }
+
 /* ------------------------------------------------------------------- */
 </style>
