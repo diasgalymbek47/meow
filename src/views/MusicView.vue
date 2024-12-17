@@ -1,5 +1,5 @@
 <script setup>
-import HeaderMusic from "../components/HeaderMusic.vue";
+import HeaderMusic from "@/components/HeaderMusic.vue";
 import MusicMain from "@/components/MusicMain.vue";
 import AlbumItem from "@/components/AlbumItem.vue";
 import AudioBar from "@/components/AudioBar.vue";
