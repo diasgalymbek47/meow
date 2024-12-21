@@ -185,7 +185,7 @@ const toggleVolume = () => {
     padding: 5px 0;
     display: flex;
     align-items: center;
-    background: #42342F;
+    background: #3d2e28f1;
     z-index: 111;
 }
 
@@ -194,7 +194,7 @@ button {
     width: 50px;
     height: 50px;
     border: none;
-    font-size: 24px;
+    font-size: 26px;
     color: #9a9a9a;
     background-color: transparent;
     outline: none;
@@ -206,14 +206,15 @@ button {
 }
 
 button:hover {
-    background-color: #c2c2c234;
+    background-color: #c2c2c21c;
+    box-shadow: 0 0 2px 2px rgba(255, 255, 255, 0.11);
     color: #e0e0e0;
 }
 
 /* Player Container */
 .player {
     position: relative;
-    padding-inline: 16px;
+    padding-inline: 20px;
 }
 
 /* Song Info Section */
@@ -228,7 +229,7 @@ button:hover {
     margin-left: auto;
     display: flex;
     justify-content: flex-end;
-    padding-right: 16px;
+    padding-right: 20px;
     gap: 20px;
 }
 
@@ -237,7 +238,7 @@ button:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 4px;
+    gap: 8px;
 }
 
 .player .btns button:nth-child(2) {
@@ -281,7 +282,7 @@ button:hover {
 
 /* Favorite Button */
 .playing-song .fav-btn {
-    margin-left: 20px;
+    margin-left: 24px;
 }
 
 .playing-song .fav-btn.active {
@@ -323,10 +324,11 @@ button:hover {
 }
 
 /* Inactive Button Styles */
-.other-btn button.no-active,
 button.no-active {
     color: #a0999733;
     background: transparent;
+    box-shadow: none;
+    cursor: default;
 }
 
 /* Progress Bar Wrapper */
@@ -355,7 +357,6 @@ button.no-active {
     width: 100%;
     height: 4px;
     background-color: #13131358;
-    border-radius: 4px;
 }
 
 /* Progress Bar Indicator */

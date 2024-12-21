@@ -4,8 +4,9 @@ import { RouterLink } from 'vue-router';
 
 <template>
     <header class="header">
-        <RouterLink to="/">
-            <h1 class="logo">Meow</h1>
+        <RouterLink to="/" class="logo">
+            <img class="logo-img" src="./icons/logoType.png">
+            <h1 class="logo-text">Meow</h1>
         </RouterLink>
 
         <nav class="nav">
@@ -19,16 +20,33 @@ import { RouterLink } from 'vue-router';
 
 <style scoped>
 .header {
-    padding: 0 4em;
+    padding: 0 2em;
     height: 88px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background: url(../components/images/musicbg-img.png) no-repeat;
+    border-radius: 20px;
+    margin-bottom: 12px;
+    position: sticky;
+    top: 10px;
+    z-index: 100;
+}
+.header .logo {
+    height: 40px;
+    display: flex;
+    gap: 10px;
 }
 
-.logo {
+.logo-text {
     margin: 0;
     color: #F0A61C;
+    text-decoration: underline;
+    font-size: 20px;
+}
+.logo-img {
+    width: 100%;
+    height: 100%;
 }
 
 .nav {

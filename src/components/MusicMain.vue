@@ -1,9 +1,23 @@
 <script setup>
 import WaveMusic from "@/components/WaveMusic.vue";
+import { ref, onMounted, onUnmounted, handleError } from "vue";
+
+const isScrolled = ref(false);
+
+const handleScroll = () => {
+    isScrolled.value = window.scrollY > 0;
+};
+
+onMounted(() => {
+    window.addEventListener('scroll', handleScroll);
+})
+onUnmounted(() => {
+    window.removeEventListener('scroll', handleScroll)
+})
 </script>
 
 <template>
-    <main>
+    <main :class="{ sticky: isScrolled }">
         <div class="left">
             <h2><span>Meoow Music</span></h2>
             <div class="buttons">
@@ -38,7 +52,7 @@ main {
     display: flex;
     justify-content: space-between;
     margin-top: 50px;
-    padding: 0 2.5em;
+    padding: 0 2.5em 46px;
 }
 
 /* left h2 */
@@ -58,6 +72,7 @@ main {
 .left .buttons {
     margin-top: 50px;
 }
+
 .left button {
     display: block;
     margin-top: 10px;
@@ -72,9 +87,11 @@ main {
     font-weight: 400;
     transition: all 0.2s ease;
 }
+
 .left button:hover {
     color: #F0A61C;
 }
+
 .left button::after {
     content: "";
     display: block;
@@ -87,7 +104,8 @@ main {
     transform: translateX(-100%);
     transition: all 0.3s ease;
 }
-.left button:hover, 
+
+.left button:hover,
 .left button.active {
     color: #F0A61C;
 }
@@ -101,9 +119,10 @@ main {
 .right .buttons {
     margin: 110px 0 70px;
 }
+
 .right button {
     margin-top: 0.4em;
-    border-radius: 4px; 
+    border-radius: 4px;
     margin-left: auto;
     font-weight: 500;
     display: block;
@@ -115,6 +134,7 @@ main {
     background-color: transparent;
     transition: all 0.2s ease;
 }
+
 .right button:hover {
     color: #F0A61C;
     border-right: 1px solid #F0A61C;
@@ -123,9 +143,11 @@ main {
 
 .right button span svg {
     position: absolute;
-    top: 50%;left: 16px;
+    top: 50%;
+    left: 16px;
     transform: translateY(-50%);
 }
+
 .right button span path {
     fill: #F0A61C;
 }
