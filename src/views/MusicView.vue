@@ -1,17 +1,20 @@
 <script setup>
-import { ref } from "vue";
 import HeaderMusic from "@/components/HeaderMusic.vue";
 import MusicMain from "@/components/MusicMain.vue";
 import AlbumItem from "@/components/AlbumItem.vue";
 import AudioBar from "@/components/AudioBar.vue";
+import Playlist from "@/components/Playlist.vue";
+import { ref, watchEffect } from "vue";
 
-// Управление состоянием раскрытия списка альбомов
-const expanded = ref(false);
+const isActive = ref(false);
 
-// Функция переключения состояния
-const toggleExpand = () => {
-    expanded.value = !expanded.value;
-};
+const isActiveToggle = ()=> {
+    isActive.value = !isActive.value
+}
+
+watchEffect(() => {
+    document.body.classList.toggle('active-playlist', isActive.value)
+})
 </script>
 
 <template>
@@ -22,30 +25,51 @@ const toggleExpand = () => {
         </div>
         <div class="lower-container">
             <div class="new-relise_line">
-                <div class="relise-info" @click="toggleExpand">
+                <div class="relise-info" @click="isActiveToggle">
                     <span class="hover title">Новые релизы</span>
                     <p>Новые треки, альбомы и сборники</p>
-                    <span class="hover more">{{ expanded ? "Скрыть ↓" : "Еще →" }}</span>
+                    <span class="hover more">Еще →</span>
                 </div>
                 <!-- Линия альбомов -->
-                <div class="albums-line" :class="{ expanded: expanded }">
+                <div class="albums-line">
                     <AlbumItem/>
                 </div>
             </div>
         </div>
-        <footer class="footer"></footer>
     </div>
-    <AudioBar />
+    <div class="audio-bar-wrap">
+        <AudioBar />
+    </div>
+
+    <div class="mus-playlist" :class="{'active-playlist': isActive}" >
+        <Playlist :toggle="isActiveToggle" />
+    </div>
 </template>
 
 <style scoped>
+.mus-playlist {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(12px);
+    background-color: rgba(0, 0, 0, 0.25);
+    display: none;
+}
+.mus-playlist.active-playlist {
+    display: block;
+}
 /* Основной стиль контейнера */
+.audio-bar-wrap {
+    position: sticky;
+    bottom: 0;
+}
+
 .upper-container {
     padding-top: 40px;
     border-radius: 20px;
     animation: fadeIn 0.5s ease-out forwards;
     background: url(../components/images/musicbg-img.png) no-repeat center;
-    box-shadow: 0px 0px 40px 0px rgba(0, 0, 0, 25%);
 }
 
 .lower-container {
@@ -55,8 +79,7 @@ const toggleExpand = () => {
     padding: 2em 2.5em 2em;
     border-radius: 20px;
     backdrop-filter: blur(10px);
-    background-color: #ffffff25;
-    box-shadow: 0px 0px 40px 0px rgba(0, 0, 0, 25%);
+    background: linear-gradient(-25deg, #efaaff2f, #f8f9ff);
 }
 
 /* Линия альбомов */

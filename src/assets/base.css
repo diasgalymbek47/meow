@@ -32,11 +32,39 @@ body {
             var(--main-bg-page) right 100px / 18% no-repeat url("/src/components/images/def-rightBG-img.png");
 }
 
+body.active-playlist {
+  overflow: hidden;
+}
+
 .container {
   width: 1080px;
   margin: 0 auto;
   text-align: center;
 }
+
+
+
+/* ScROLL BAR */
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f8f9ff;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #bfbbbc;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 
 /**
  * Render the `main` element consistently in IE.

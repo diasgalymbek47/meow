@@ -1,25 +1,11 @@
 <script setup>
 import WaveMusic from "@/components/WaveMusic.vue";
-import { ref, onMounted, onUnmounted, handleError } from "vue";
-
-const isScrolled = ref(false);
-
-const handleScroll = () => {
-    isScrolled.value = window.scrollY > 0;
-};
-
-onMounted(() => {
-    window.addEventListener('scroll', handleScroll);
-})
-onUnmounted(() => {
-    window.removeEventListener('scroll', handleScroll)
-})
 </script>
 
 <template>
-    <main :class="{ sticky: isScrolled }">
+    <main>
         <div class="left">
-            <h2><span>Meoow Music</span></h2>
+            <h2>Вре<span>м</span>я <span>м</span>узыки</h2>
             <div class="buttons">
                 <button class="active">Главное</button>
                 <button>Радио</button>
@@ -58,14 +44,14 @@ main {
 /* left h2 */
 .left h2 {
     color: #fff;
-    font-weight: 00;
+    font-weight: 600;
     font-size: 48px;
+    letter-spacing: 1px;
     pointer-events: none;
 }
 
 .left h2 span {
-    font-family: "Madimi One", sans-serif;
-    letter-spacing: 2px;
+    color: #F0A61C;
 }
 
 /* left btns */

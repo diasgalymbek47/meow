@@ -8,7 +8,7 @@ const musicStore = useMusicsStore();
 const music = ref(null);
 const isLoading = ref(true);
 const durations = ref({
-    "start": 0,
+    "start": '0:00',
     "end": 0
 });
 const progress = ref(0);
@@ -147,25 +147,27 @@ const toggleVolume = () => {
                 <a href="#" class="song-name">{{ music.name }}</a>
                 <a href="#" class="song-autor">{{ music.artist }}</a>
             </div>
-            <button class="fav-btn material-symbols-outlined" @click="toggleFav" :class="{ active: isActiveFav }"
-                title="Нравится">
-                favorite
-            </button>
+            <div class="buttons">
+                <button class="fav-btn material-symbols-outlined" @click="toggleFav" :class="{ active: isActiveFav }"
+                title="Нравится">favorite</button>
+                <button class="material-symbols-outlined">shuffle</button>
+                <button class="material-symbols-outlined">repeat</button>
+            </div>
+
         </div>
 
         <!-- Other Buttons -->
         <div class="other-btn">
-            <button class="material-symbols-outlined">lyrics</button>
+            <button class="material-symbols-outlined">Share</button>
             <button class="material-symbols-outlined no-active">format_list_bulleted</button>
-            <button class="material-symbols-outlined">settings</button>
 
             <!-- Volume Control -->
-            <div class="volume">
-                <button class="material-symbols-outlined" @click="toggleVolume">volume_up</button>
-                <div class="volume-line-wrap" ref="volumeBar" @click="seekVolume($event)">
-                    <div class="volume-line" :class="{ active: isActiveVolume }">
-                        <span :style="{ width: volume * 100 + '%' }"</span>
-                    </div>
+        </div>
+        <div class="volume">
+            <button class="material-symbols-outlined" @click="toggleVolume">volume_up</button>
+            <div class="volume-line-wrap" ref="volumeBar" @click="seekVolume($event)">
+                <div class="volume-line" :class="{ active: isActiveVolume }">
+                    <span :style="{ width: volume * 100 + '%' }" </span>
                 </div>
             </div>
         </div>
@@ -178,8 +180,6 @@ const toggleVolume = () => {
 <style scoped>
 /* Main Audio Bar Container */
 .audio-bar {
-    position: sticky;
-    bottom: 0;
     width: 100%;
     height: 60px;
     padding: 5px 0;
@@ -229,7 +229,6 @@ button:hover {
     margin-left: auto;
     display: flex;
     justify-content: flex-end;
-    padding-right: 20px;
     gap: 20px;
 }
 
@@ -274,16 +273,21 @@ button:hover {
 
 .playing-song .song-info a.song-autor {
     font-size: 12px;
+    color: #c3c3c3;
 }
 
 .playing-song .song-info a:hover {
     color: #F0A61C;
 }
 
-/* Favorite Button */
-.playing-song .fav-btn {
-    margin-left: 24px;
+.playing-song .buttons {
+    display: flex;
+    gap: 10px;
+    margin-left: 20px;
 }
+
+
+/* Favorite Button */
 
 .playing-song .fav-btn.active {
     color: #e76060;
@@ -291,6 +295,7 @@ button:hover {
 
 /* Volume Control */
 .volume {
+    padding-right: 20px;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -338,7 +343,6 @@ button.no-active {
     width: 100%;
     cursor: pointer;
     padding: 10px 0 4px;
-    transition: all 0s ease;
 }
 
 /* Progress Bar Hover Effect */
