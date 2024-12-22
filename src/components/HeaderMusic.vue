@@ -1,9 +1,16 @@
-<script>
+<script setup>
 import { RouterLink } from 'vue-router';
+
+defineProps({
+    activePlaylist: {
+        type: String,
+        required: true
+    }
+})
 </script>
 
 <template>
-    <header class="header">
+    <header class="header" :class="{active: activePlaylist}">
         <RouterLink to="/" class="logo">
             <img class="logo-img" src="./icons/logoType.png">
             <h1 class="logo-text">Meow</h1>
@@ -25,7 +32,7 @@ import { RouterLink } from 'vue-router';
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: url(../components/images/musicbg-img.png) no-repeat;
+    background-color: #151515;
     border-radius: 20px;
     margin-bottom: 12px;
     position: sticky;
@@ -36,6 +43,9 @@ import { RouterLink } from 'vue-router';
     height: 40px;
     display: flex;
     gap: 10px;
+}
+.header.active{
+    box-shadow: inset 5px 5px 20px 0px rgba(0, 0, 0, 0.5);
 }
 
 .logo-text {

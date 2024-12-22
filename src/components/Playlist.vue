@@ -5,6 +5,10 @@ defineProps({
     toggle: {
         type: Function,
         required: true,
+    },
+    isActive: {
+        type: String,
+        required: true,
     }
 })
 </script>
@@ -12,7 +16,7 @@ defineProps({
 <template>
     <div class="bg-block">
         <div class="back-btn"  @click="toggle"></div>
-        <div class="playlist-wrap">
+        <div class="playlist-wrap" :class="{active: isActive}">
 
             <div class="playlist">
                 <div class="name">
@@ -53,9 +57,14 @@ defineProps({
     width: 100%;
     height: 600px;
     border-radius: 20px;
-    backdrop-filter: blur(50px);
-    box-shadow: 8px 8px 24px 4px rgba(0, 0, 0, 0.4);
-    background: linear-gradient(317deg, rgba(0, 0, 0, 100%) 0%, rgba(168, 132, 120, 0.68) 100%);
+    backdrop-filter: blur(20px);
+    transform: translateY(100%) scale(0.1);
+    box-shadow: inset 10px 10px 20px 0px rgba(0, 0, 0, 0.4);
+    background: linear-gradient(317deg, rgba(0, 0, 0, 0.85) 0%, rgba(168, 132, 120, 0.75) 100%);
+    transition: all 0.5s ease;
+}
+.playlist-wrap.active {
+    transform: translateY(0) scale(1);
 }
 
 .audiobar {

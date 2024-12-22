@@ -104,6 +104,13 @@ const toggleFav = () => {
 const toggleVolume = () => {
     isActiveVolume.value = !isActiveVolume.value;
 };
+
+defineProps({
+    toggle: {
+        type: Function,
+        required: true
+    }
+})
 </script>
 
 
@@ -159,7 +166,7 @@ const toggleVolume = () => {
         <!-- Other Buttons -->
         <div class="other-btn">
             <button class="material-symbols-outlined">Share</button>
-            <button class="material-symbols-outlined no-active">format_list_bulleted</button>
+            <button class="material-symbols-outlined" @click="toggle">format_list_bulleted</button>
 
             <!-- Volume Control -->
         </div>
@@ -295,7 +302,7 @@ button:hover {
 
 /* Volume Control */
 .volume {
-    padding-right: 20px;
+    padding-inline: 20px;
     display: flex;
     align-items: center;
     gap: 10px;

@@ -19,7 +19,7 @@ watchEffect(() => {
 
 <template>
     <div class="container">
-        <HeaderMusic />
+        <HeaderMusic :activePlaylist="isActive"/>
         <div class="upper-container">
             <MusicMain />
         </div>
@@ -37,12 +37,12 @@ watchEffect(() => {
             </div>
         </div>
     </div>
-    <div class="audio-bar-wrap">
-        <AudioBar />
+    <div class="audio-bar-wrap" :class="{'active-playlist': isActive}">
+        <AudioBar :toggle="isActiveToggle"/>
     </div>
 
     <div class="mus-playlist" :class="{'active-playlist': isActive}" >
-        <Playlist :toggle="isActiveToggle" />
+        <Playlist :toggle="isActiveToggle" :isActive="isActive"/>
     </div>
 </template>
 
@@ -52,12 +52,24 @@ watchEffect(() => {
     top: 0;
     width: 100%;
     height: 100%;
-    backdrop-filter: blur(12px);
-    background-color: rgba(0, 0, 0, 0.25);
-    display: none;
+    background-color: rgba(0, 0, 0, 0.55);
+    opacity: 0;
+    overflow: hidden;
+    pointer-events: none;
+    transition: all 0.3s ease;
 }
 .mus-playlist.active-playlist {
-    display: block;
+    overflow: visible;
+    opacity: 1;
+    pointer-events: all;
+}
+.audio-bar-wrap {
+    transition: all 0.3s ease;
+}
+.audio-bar-wrap.active-playlist {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.1);
 }
 /* Основной стиль контейнера */
 .audio-bar-wrap {
@@ -136,7 +148,8 @@ watchEffect(() => {
     position: absolute;
     top: 20px;
     right: 25px;
-    color: #000;
+    color: #000000;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 /* Анимация появления основного контейнера */
