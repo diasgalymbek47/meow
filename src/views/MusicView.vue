@@ -37,12 +37,13 @@ watchEffect(() => {
             </div>
         </div>
     </div>
-    <div class="audio-bar-wrap" :class="{'active-playlist': isActive}">
-        <AudioBar :toggle="isActiveToggle"/>
-    </div>
 
     <div class="mus-playlist" :class="{'active-playlist': isActive}" >
         <Playlist :toggle="isActiveToggle" :isActive="isActive"/>
+    </div>
+    
+    <div class="audio-bar-wrap" :class="{'active-playlist': isActive}">
+        <AudioBar :toggle="isActiveToggle"/>
     </div>
 </template>
 
