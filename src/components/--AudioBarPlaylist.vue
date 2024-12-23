@@ -52,13 +52,13 @@ import AudioBar from './AudioBar.vue';
     padding: 0;
     margin: 0 auto;
     position: absolute;
-    top: 58%;
+    top: 59%;
     gap: 30px;
 }
 ::v-deep(.volume) {
     position: absolute;
     left: 50%;
-    top: 52.5%;
+    top: 53.5%;
     gap: 0;
     padding: 0;
     transform: translate(-50%);
@@ -73,11 +73,14 @@ import AudioBar from './AudioBar.vue';
     background: #fff;
 }
 ::v-deep(.volume button) {
-    display: none;
+    pointer-events: none;
+    width: 0;
+    height: 0;
+    margin-right: 20px;
 }
 ::v-deep(.player) {
     position: absolute;
-    bottom: 18%;
+    bottom: 17%;
 }
 ::v-deep(.player .btns) {
     gap: 25px;

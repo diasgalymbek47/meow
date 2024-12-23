@@ -7,7 +7,7 @@ defineProps({
         required: true,
     },
     isActive: {
-        type: String,
+        type: Boolean,
         required: true,
     }
 })

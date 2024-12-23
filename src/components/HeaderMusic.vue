@@ -3,7 +3,7 @@ import { RouterLink } from 'vue-router';
 
 defineProps({
     activePlaylist: {
-        type: String,
+        type: Boolean,
         required: true
     }
 })

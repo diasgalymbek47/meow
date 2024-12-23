@@ -2,42 +2,45 @@
 import { useMusicsStore } from "@/stores/musics";
 import { useMusicPlayer } from "@/stores/musicPlayer";
 import { ref, onMounted } from "vue";
+import { computed } from "vue";
 
-const audioPleer = useMusicPlayer();
+const audioPlayer = useMusicPlayer();
 const musicStore = useMusicsStore();
-const music = ref(null);
 const isLoading = ref(true);
-const durations = ref({
-    "start": '0:00',
-    "end": 0
+const volume = computed({
+    get: () => audioPlayer.volume,
+    set: (newVolume) => {
+        audioPlayer.setVolume(newVolume);
+    },
 });
-const progress = ref(0);
-const volume = ref(1);
 const isActivePlay = ref(false);  // Управление состоянием кнопки play
-const isActiveFav = ref(false);   // Управление состоянием кнопки favorite
+const isActiveFav = computed(() => audioPlayer.isActiveFav);   // Управление состоянием кнопки favorite
 const isActiveVolume = ref(false); // Управление состоянием кнопки volume
-const isPlaying = ref(false); // Управление состоянием воспроизведения
+const music = computed(() => audioPlayer.getMusic()); // Получение текущей музыки
+const progress = computed(() => audioPlayer.progress); // Прогресс воспроизведения
+const durations = computed(() => audioPlayer.duration); // Время начала и конца
+const isPlaying = computed(() => audioPlayer.isActive); // Состояние воспроизведения
 
 // Инициализация музыки и обработка данных
 onMounted(async () => {
     await musicStore.getMusics();
     if (musicStore.musics.length > 0) {
-        audioPleer.init(musicStore.musics);
+        audioPlayer.init(musicStore.musics);
 
-        if (audioPleer.currentMusic) {
-            music.value = audioPleer.getMusic();
+        if (audioPlayer.currentMusic) {
+            music.value = audioPlayer.getMusic();
 
-            audioPleer.currentMusic.onplay = () => {
+            audioPlayer.currentMusic.onplay = () => {
                 updatePlayerState();
                 update();
             };
-            audioPleer.currentMusic.onloadedmetadata = () => {
-                durations.value.end = formatDuration(audioPleer.currentMusic.duration);
+            audioPlayer.currentMusic.onloadedmetadata = () => {
+                durations.value.end = formatDuration(audioPlayer.currentMusic.duration);
             };
-            audioPleer.currentMusic.ontimeupdate = () => {
-                if (audioPleer.currentMusic.duration > 0) {
-                    durations.value.start = formatDuration(audioPleer.currentMusic.currentTime);
-                    progress.value = (audioPleer.currentMusic.currentTime / audioPleer.currentMusic.duration) * 100;
+            audioPlayer.currentMusic.ontimeupdate = () => {
+                if (audioPlayer.currentMusic.duration > 0) {
+                    durations.value.start = formatDuration(audioPlayer.currentMusic.currentTime);
+                    progress.value = (audioPlayer.currentMusic.currentTime / audioPlayer.currentMusic.duration) * 100;
                 }
             };
         }
@@ -47,12 +50,12 @@ onMounted(async () => {
 
 // Обновление состояния при воспроизведении или паузе
 const updatePlayerState = () => {
-    isPlaying.value = !audioPleer.currentMusic.paused;
+    isPlaying.value = !audioPlayer.currentMusic.paused;
     isActivePlay.value = isPlaying.value;
 };
 
 const update = () => {
-    music.value = audioPleer.getMusic();
+    music.value = audioPlayer.getMusic();
 }
 
 // Форматирование продолжительности
@@ -61,44 +64,28 @@ const formatDuration = (seconds) => {
     const secs = Math.floor(seconds % 60).toString().padStart(2, "0");
     return `${minutes}:${secs}`;
 };
-
-// Перемотка музыки
-function seekMusic(event) {
+// Переключение воспроизведения
+const togglePlay = () => audioPlayer.togglePlay();
+const seekMusic = (event) => {
     const progressBar = event.currentTarget;
     const rect = progressBar.getBoundingClientRect();
     const clickX = event.clientX - rect.left;
     const width = rect.width;
     const clickPercentage = clickX / width;
-    const newTime = audioPleer.currentMusic.duration * clickPercentage;
-    audioPleer.currentMusic.currentTime = newTime;
-    progress.value = clickPercentage * 100;
-}
+    const newTime = audioPlayer.currentMusic.duration * clickPercentage;
+    audioPlayer.currentMusic.currentTime = newTime;
+};
+
 function seekVolume(event) {
     const volumeBar = event.currentTarget;
-    const rect = volumeBar.getBoundingClientRect()
+    const rect = volumeBar.getBoundingClientRect();
     const clickX = event.clientX - rect.left;
     const width = rect.width;
     const clickPercentage = clickX / width;
 
+    // Устанавливаем новое значение громкости
     volume.value = clickPercentage;
-    audioPleer.currentMusic.volume = volume.value;
 }
-
-// Переключение воспроизведения
-const togglePlay = () => {
-    if (isPlaying.value) {
-        audioPleer.pause();
-    } else {
-        audioPleer.play();
-    }
-    isPlaying.value = !isPlaying.value;
-    isActivePlay.value = !isActivePlay.value;
-};
-
-// Переключение состояния фаворита
-const toggleFav = () => {
-    isActiveFav.value = !isActiveFav.value;
-};
 
 // Переключение состояния громкости
 const toggleVolume = () => {
@@ -111,6 +98,7 @@ defineProps({
         required: true
     }
 })
+
 </script>
 
 
@@ -120,7 +108,7 @@ defineProps({
     <div v-if="isLoading">Загрузка музыки...</div>
     <div v-else class="audio-bar">
         <!-- Progress Bar -->
-        <div class="progress-bar-wrap" @click="seekMusic($event)">
+        <div class="progress-bar-wrap" @click="seekMusic">
             <div class="progress-bar">
                 <span :style="{ width: progress + '%' }"></span>
                 <div class="timer">
@@ -133,13 +121,13 @@ defineProps({
         <!-- Player Controls -->
         <div class="player">
             <div class="btns">
-                <button @click="audioPleer.prev" class="left material-symbols-outlined">
+                <button @click="audioPlayer.prev" class="left material-symbols-outlined">
                     keyboard_double_arrow_left
                 </button>
-                <button @click="togglePlay" :class="{ active: isActivePlay }" class="play material-symbols-outlined">
-                    {{ isActivePlay ? 'pause_circle' : 'play_circle' }}
+                <button @click="togglePlay" :class="{ active: isPlaying }" class="play material-symbols-outlined">
+                    {{ isPlaying ? 'pause_circle' : 'play_circle' }}
                 </button>
-                <button @click="audioPleer.next" class="right material-symbols-outlined">
+                <button @click="audioPlayer.next" class="right material-symbols-outlined">
                     keyboard_double_arrow_right
                 </button>
             </div>
@@ -155,26 +143,23 @@ defineProps({
                 <a href="#" class="song-autor">{{ music.artist }}</a>
             </div>
             <div class="buttons">
-                <button class="fav-btn material-symbols-outlined" @click="toggleFav" :class="{ active: isActiveFav }"
-                title="Нравится">favorite</button>
+                <button class="fav-btn material-symbols-outlined" @click="audioPlayer.toggleFav"
+                    :class="{ active: isActiveFav }" title="Нравится">favorite</button>
                 <button class="material-symbols-outlined">shuffle</button>
                 <button class="material-symbols-outlined">repeat</button>
             </div>
-
         </div>
-
         <!-- Other Buttons -->
         <div class="other-btn">
             <button class="material-symbols-outlined">Share</button>
             <button class="material-symbols-outlined" @click="toggle">format_list_bulleted</button>
-
-            <!-- Volume Control -->
         </div>
+        <!-- Volume Control -->
         <div class="volume">
             <button class="material-symbols-outlined" @click="toggleVolume">volume_up</button>
-            <div class="volume-line-wrap" ref="volumeBar" @click="seekVolume($event)">
-                <div class="volume-line" :class="{ active: isActiveVolume }">
-                    <span :style="{ width: volume * 100 + '%' }" </span>
+            <div class="volume-line-wrap" @click="seekVolume($event)">
+                <div class="volume-line" :class="{active: isActiveVolume}">
+                    <span :style="{ width: volume * 100 + '%' }"></span>
                 </div>
             </div>
         </div>
