@@ -1,8 +1,14 @@
 <script setup>
 import { useMusicsStore } from "@/stores/musics";
 import { useMusicPlayer } from "@/stores/musicPlayer";
-import { ref, onMounted } from "vue";
-import { computed } from "vue";
+import { ref, onMounted, computed } from "vue";
+
+defineProps({
+    toggle: {
+        type: Function,
+        required: true
+    },
+})
 
 const audioPlayer = useMusicPlayer();
 const musicStore = useMusicsStore();
@@ -91,13 +97,6 @@ function seekVolume(event) {
 const toggleVolume = () => {
     isActiveVolume.value = !isActiveVolume.value;
 };
-
-defineProps({
-    toggle: {
-        type: Function,
-        required: true
-    }
-})
 
 </script>
 

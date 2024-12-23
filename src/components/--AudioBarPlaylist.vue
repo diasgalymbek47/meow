@@ -1,10 +1,17 @@
 <script setup>
 import AudioBar from './AudioBar.vue';
+
+defineProps({
+    toggle: {
+        type: Function,
+        required: true
+    },
+})
 </script>
 
 <template>
     <div class="audiobar">
-        <AudioBar/>
+        <AudioBar :toggle="toggle"/>
     </div>
 </template>
 

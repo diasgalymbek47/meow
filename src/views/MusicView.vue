@@ -8,7 +8,7 @@ import { ref, watchEffect } from "vue";
 
 const isActive = ref(false);
 
-const isActiveToggle = ()=> {
+const toggleFunction = ()=> {
     isActive.value = !isActive.value
 }
 
@@ -25,7 +25,7 @@ watchEffect(() => {
         </div>
         <div class="lower-container">
             <div class="new-relise_line">
-                <div class="relise-info" @click="isActiveToggle">
+                <div class="relise-info" @click="toggleFunction">
                     <span class="hover title">Новые релизы</span>
                     <p>Новые треки, альбомы и сборники</p>
                     <span class="hover more">Еще →</span>
@@ -39,11 +39,11 @@ watchEffect(() => {
     </div>
 
     <div class="mus-playlist" :class="{'active-playlist': isActive}" >
-        <Playlist :toggle="isActiveToggle" :isActive="isActive"/>
+        <Playlist :toggle="toggleFunction" :isActive="isActive"/>
     </div>
     
     <div class="audio-bar-wrap" :class="{'active-playlist': isActive}">
-        <AudioBar :toggle="isActiveToggle"/>
+        <AudioBar :toggle="toggleFunction"/>
     </div>
 </template>
 

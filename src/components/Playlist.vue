@@ -4,7 +4,7 @@ import AudioBarPlaylist from './--AudioBarPlaylist.vue';
 defineProps({
     toggle: {
         type: Function,
-        required: true,
+        required: true
     },
     isActive: {
         type: Boolean,
@@ -15,8 +15,8 @@ defineProps({
 
 <template>
     <div class="bg-block">
-        <div class="back-btn"  @click="toggle"></div>
-        <div class="playlist-wrap" :class="{active: isActive}">
+        <div class="back-btn" @click="toggle"></div>
+        <div class="playlist-wrap" :class="{ active: isActive }">
 
             <div class="playlist">
                 <div class="name">
@@ -29,7 +29,7 @@ defineProps({
             <!-- ------------------------------------------------- -->
 
             <div class="audiobar">
-                <AudioBarPlaylist />
+                <AudioBarPlaylist :toggle="toggle"/>
             </div>
 
         </div>
@@ -63,6 +63,7 @@ defineProps({
     background: linear-gradient(317deg, rgba(0, 0, 0, 0.85) 0%, rgba(168, 132, 120, 0.75) 100%);
     transition: all 0.5s ease;
 }
+
 .playlist-wrap.active {
     transform: translateY(0) scale(1);
 }
