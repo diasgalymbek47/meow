@@ -1,7 +1,7 @@
 ﻿<script setup>
 
 import Logo from "@/components/Logo.vue";
-import SignInButton from "@/components/SignInButton.vue";
+import SignInLinkButton from "@/components/SignInLinkButton.vue";
 import HeaderHomeNavbar from "@/components/HeaderHomeNavbar.vue";
 </script>
 
@@ -11,7 +11,7 @@ import HeaderHomeNavbar from "@/components/HeaderHomeNavbar.vue";
       <div class="d-flex align-items-center justify-content-between">
         <Logo/>
         <HeaderHomeNavbar/>
-        <SignInButton/>
+        <SignInLinkButton/>
       </div>
     </div>
   </header>

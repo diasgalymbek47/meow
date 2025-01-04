@@ -10,7 +10,7 @@ import StartButton from "@/components/StartButton.vue";
     <HeaderHome/>
     <div
         class="container content flex-grow-1 d-flex flex-column align-items-center justify-content-center">
-      <div class="d-flex flex-column align-items-center justify-content-center">
+      <div class="d-flex flex-column align-items-center justify-content-center mb-5">
         <Welcome/>
         <h2 class="content_title">
           Слушай <span>музыку</span>, смотри <span>фильмы</span> и общайся с <span>друзьями</span>.
@@ -29,14 +29,6 @@ import StartButton from "@/components/StartButton.vue";
 </template>
 
 <style scoped>
-.wrap {
-  gap: 50px;
-}
-
-.content {
-  margin-bottom: 50px;
-}
-
 .content_title {
   margin-top: 50px;
   max-width: 750px;

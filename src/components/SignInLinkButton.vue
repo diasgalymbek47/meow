@@ -10,7 +10,7 @@
 
 <style scoped>
 .button_link {
-  padding: 10px 25px 6px;
+  padding: 12px 25px 6px;
   text-decoration: none;
   background-color: #5F5BFF;
   border-radius: 8px;
@@ -24,7 +24,8 @@
 
 .button_text {
   margin: 0;
-  font-size: 18px;
+  font-size: 16px;
   color: #F6F6F6;
+  text-transform: uppercase;
 }
 </style>
