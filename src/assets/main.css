@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Madimi+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Overpass:wght@100..900&display=swap');
 
+html {
+    min-width: 768px;
+}
+
 * {
     font-family: "Overpass", serif;
 }
