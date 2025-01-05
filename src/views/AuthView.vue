@@ -7,12 +7,25 @@ import SignInLinkButton from "@/components/SignInLinkButton.vue";
 import RegisterButton from "@/components/RegisterButton.vue";
 import RedirectButton from "@/components/RedirectButton.vue";
 import {useAuthenticationForm} from "@/stores/AuthForm.js";
+import {useUsers} from "@/stores/users.js";
 
 const form = useAuthenticationForm();
+const users = useUsers();
 
 function login() {
-  if (form.isRegister) form.isRegister = false;
-  return;
+  if (form.isRegister) {
+    form.isRegister = false;
+    return;
+  }
+
+  console.log(form.email);
+
+  const user = {
+    email: form.email,
+    password: form.password,
+  }
+
+  users.checkUser(user);
 }
 
 function register() {
@@ -27,7 +40,7 @@ function register() {
       <div class="form d-flex">
         <div class="form_left_box d-flex flex-column align-items-center"
              :class="{'right': form.isRegister}">
-          <RedirectButton :fill="'#000000'" :width="'20'" :height="'18'"
+          <RedirectButton @click="() => form.isRegister = false" :fill="'#000000'" :width="'20'" :height="'18'"
                           class="form_back_button"/>
           <h2 class="form_title m-0">
             {{ form.isRegister ? 'Создать профиль' : 'Войти в профиль' }}</h2>
@@ -45,9 +58,9 @@ function register() {
           <p class="form_subtitle m-0">
             {{ form.isRegister ? 'или используйте ваш email, чтобы зарегистрироваться' : 'или используйте ваш аккаунт' }}</p>
           <div class="form_inputs d-flex flex-column w-100">
-            <DefaultInput v-if="form.isRegister" v-bind="form.name" placeholder="Имя"/>
-            <DefaultInput v-bind="form.email" type="email" placeholder="Почта"/>
-            <DefaultInput v-bind="form.password" type="password" placeholder="Пароль"/>
+            <DefaultInput v-if="form.isRegister" v-model="form.name" placeholder="Имя"/>
+            <DefaultInput v-model="form.email" type="email" placeholder="Почта"/>
+            <DefaultInput v-model="form.password" type="password" placeholder="Пароль"/>
           </div>
           <span v-if="!form.isRegister" class="form_forgot">Забыл пароль?</span>
           <RegisterButton v-if="form.isRegister" @click="register"
