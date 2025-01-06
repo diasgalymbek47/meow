@@ -5,7 +5,7 @@
   <nav class="nav">
     <ul class="nav_menu d-flex align-items-center">
       <li class="nav_item">
-        <RouterLink class="nav_link" to="/Music">Музыка</RouterLink>
+        <RouterLink class="nav_link" to="/music">Музыка</RouterLink>
       </li>
       <li class="nav_item">
         <RouterLink class="nav_link" to="/">Чат</RouterLink>

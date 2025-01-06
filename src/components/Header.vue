@@ -2,7 +2,7 @@
 
 import Logo from "@/components/Logo.vue";
 import SignInLinkButton from "@/components/SignInLinkButton.vue";
-import HeaderHomeNavbar from "@/components/HeaderHomeNavbar.vue";
+import HeaderNavbar from "@/components/HeaderNavbar.vue";
 import UserBox from "@/components/UserBox.vue";
 import {useUsers} from "@/stores/users.js";
 
@@ -14,7 +14,7 @@ const user = useUsers();
     <div class="container">
       <div class="d-flex align-items-center justify-content-between">
         <Logo/>
-        <HeaderHomeNavbar/>
+        <HeaderNavbar/>
         <UserBox v-if="user.activeUser" :username="user.activeUser.name"/>
         <SignInLinkButton v-else/>
       </div>
