@@ -22,12 +22,12 @@ onMounted(async() => {
             <Input />
             <div class="content d-flex my-4">
                 <section class="sidebar col-3">
-                    <MusicSidebar :data="data"/>
+                    <MusicSidebar :data="data.slice(32, 40)"/>
                 </section>
                 <main class="main col-9">
                     <div class="main-music p-2">
                         <MusicAlbum :data="data.slice(0, 10)"/>
-                        <MusicNewTracks :data="data.slice(21, 28)"/>
+                        <MusicNewTracks :data="data.slice(12, 19)"/>
                         <MusicAlbum :data="data.slice(20, 30)"/>
                     </div>
                 </main>

@@ -12,11 +12,11 @@ defineProps({
         <h2 class="title">Новые Музыки</h2>
         <ul>
             <li v-for="(item, index) in data" :key="index">
-                <div>
+                <div class="d-flex align-items-center">
                     <img :src="item.img">
                     <h4>{{ item.name }} - <span>{{ item.artist }}</span></h4>
                 </div>
-                <div>
+                <div class="d-flex align-items-center">
                     <span class="fav">❤️</span>
                     <p>2:42</p>
                 </div>
@@ -41,9 +41,11 @@ ul {
 
     & li {
         border-bottom: 1px solid #afafaf;
+        cursor: pointer;
         padding: 5px;
         width: 100%;
         height: 60px;
+        display: flex;
         align-items: center;
         justify-content: space-between;
 
@@ -77,10 +79,7 @@ ul {
         }
     }
 
-    & li,
-    & li div {
-        display: flex;
-        align-items: center;
-    }
+    & li div {transition: all 0.3s ease;}
+    & li:hover div:first-child {transform: translateX(-20px);}
 }
 </style>

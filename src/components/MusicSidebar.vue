@@ -21,7 +21,7 @@ defineProps ({
         </nav>
         <ul class="mt-4 p-2 pe-5">
             <li><a href="#" class="perf-title">Популярные Исполнители</a></li>
-            <li v-for="(item, index) in data.slice(11, 19)" :key="index"><a href="#"><img :src="item.img"></a></li>
+            <li v-for="(item, index) in data" :key="index"><a href="#" class="perf-img mb-3"><img :src="item.img"></a></li>
             <li><a href="#" class="perf-title more">Еще →</a></li>
         </ul>
     </div>
@@ -55,6 +55,10 @@ ul {
         height: 160px;
         object-fit: cover;
         border-radius: .75rem;
+        transition: all 0.3s ease;
+        &:hover {
+            transform: translateX(10px);
+        }
     }
     
     & a {display: block;}
