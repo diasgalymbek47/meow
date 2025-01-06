@@ -15,7 +15,7 @@ import PlayV1 from "@/components/icons/PlayV1.vue";
 <style scoped>
 .start_button {
   padding: 15px 40px;
-  background-color: #000267;
+  background-color: var(--dark-blue);
   border-radius: 10px;
   text-decoration: none;
   transition: .3s ease;
@@ -32,6 +32,6 @@ import PlayV1 from "@/components/icons/PlayV1.vue";
 }
 
 .start_button:hover {
-  background-color: #0104a3;
+  background-color: var(--dark--blue-active);
 }
 </style>

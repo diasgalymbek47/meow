@@ -18,10 +18,6 @@
 </template>
 
 <style scoped>
-.nav {
-
-}
-
 .nav_menu {
   margin: 0;
   padding: 0;
@@ -29,12 +25,8 @@
   gap: 50px;
 }
 
-.nav_item {
-
-}
-
 .nav_item:hover .nav_link {
-  color: #5F5BFF;
+  color: var(--dark-indigo-active);
 }
 
 .nav_item:hover .nav_link:after {
@@ -45,7 +37,7 @@
   position: relative;
   text-decoration: none;
   font-size: 20px;
-  color: #201B65;
+  color: var(--dark-indigo);
 
   transition: .3s ease;
 }
@@ -58,7 +50,7 @@
   right: 0;
 
   height: 2px;
-  background-color: #5F5BFF;
+  background-color: var(--dark-indigo-active);
   transition: .3s ease;
 
   scale: 0;
