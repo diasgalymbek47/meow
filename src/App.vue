@@ -16,5 +16,8 @@ import DarkTheme from "@/components/DarkTheme.vue";
 .main {
   position: relative;
   z-index: 1;
+
+  background: linear-gradient(0.92deg, #DEDBD3 34.88%, #F8F9FF 95.54%),
+  linear-gradient(0.92deg, #DEDBD3 34.88%, #F8F9FF 95.54%);
 }
 </style>

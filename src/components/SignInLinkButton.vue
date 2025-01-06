@@ -14,14 +14,14 @@ const form = useAuthenticationForm()
 .button_link {
   padding: 12px 25px 6px;
   text-decoration: none;
-  background-color: #5F5BFF;
+  background-color: var(--violet-blue);
   border-radius: 8px;
 
   transition: .3s ease;
 }
 
 .button_link:hover {
-  background-color: #201B65;
+  background-color: var(--violet-blue-active);
 }
 
 .button_link.non_active {

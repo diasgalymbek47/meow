@@ -12,16 +12,16 @@
   .welcome {
     padding: 5px 20px;
     width: max-content;
-    border: 1px solid #E4E4E4;
+    border: 1px solid var(--black);
     border-radius: 40px;
   }
 
   .welcome_text {
     margin: 0;
-    color: #201B65;
+    color: var(--dark-indigo);
 
     span {
-      color: #5F5BFF;
+      color: var(--violet-blue);
     }
   }
 </style>

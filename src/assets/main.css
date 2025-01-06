@@ -18,3 +18,33 @@ html {
 .w-100 {
     width: 100%;
 }
+
+body {
+    --dark-indigo: #201B65;
+    --dark-indigo-active: #5F5BFF;
+    --violet-blue: #5F5BFF;
+    --violet-blue-active: #201B65;
+    --dark-blue: #000267;
+    --dark--blue-active: #0104a3;
+    --white: #fff;
+    --white-active: #000;
+    --black: #000;
+    --black-active: #fff;
+    --golden-yellow: #F0A61C;
+    --golden-yellow-active: #cf8600;
+}
+
+body.darkTheme {
+    --dark-indigo: #7781ff;
+    --dark-indigo-active: #a09cfa;
+    --violet-blue: #4d46ff;
+    --violet-blue-active: #0f00ff;
+    --dark-blue: #292ce3;
+    --dark--blue-active: #0003d3;
+    --white: #000000;
+    --white-active: #ffffff;
+    --black: #ffffff;
+    --black-active: #000000;
+    --golden-yellow: #F0A61C;
+    --golden-yellow-active: #cf8600;
+}

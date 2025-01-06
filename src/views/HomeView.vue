@@ -35,10 +35,11 @@ import StartButton from "@/components/StartButton.vue";
   text-align: center;
   font-weight: 600;
   font-size: 48px;
-  color: #201B65;
+  color: var(--dark-indigo);
+  transition: .3s ease;
 
   span {
-    color: #5F5BFF;
+    color: var(--violet-blue);
   }
 }
 
@@ -46,6 +47,7 @@ import StartButton from "@/components/StartButton.vue";
   margin-top: 40px;
   text-align: center;
   font-size: 20px;
-  color: #201B65;
+  color: var(--dark-indigo);
+  transition: .3s ease;
 }
 </style>
