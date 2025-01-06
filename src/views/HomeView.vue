@@ -8,8 +8,7 @@ import StartButton from "@/components/StartButton.vue";
 <template>
   <div class="wrap d-flex flex-column flex-grow-1">
     <HeaderHome/>
-    <div
-        class="container content flex-grow-1 d-flex flex-column align-items-center justify-content-center">
+    <div class="container content flex-grow-1 d-flex flex-column align-items-center justify-content-center">
       <div class="d-flex flex-column align-items-center justify-content-center mb-5">
         <Welcome/>
         <h2 class="content_title">
