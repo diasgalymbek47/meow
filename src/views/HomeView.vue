@@ -1,13 +1,13 @@
 ﻿<script setup>
 
-import HeaderHome from "@/components/HeaderHome.vue";
+import Header from "@/components/Header.vue";
 import Welcome from "@/components/Welcome.vue";
 import StartButton from "@/components/StartButton.vue";
 </script>
 
 <template>
   <div class="wrap d-flex flex-column flex-grow-1">
-    <HeaderHome/>
+    <Header/>
     <div class="container content flex-grow-1 d-flex flex-column align-items-center justify-content-center">
       <div class="d-flex flex-column align-items-center justify-content-center mb-5">
         <Welcome/>
